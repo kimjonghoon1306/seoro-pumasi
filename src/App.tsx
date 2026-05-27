@@ -7,6 +7,9 @@ import Dashboard from './pages/Dashboard'
 import Missions from './pages/Missions'
 import Register from './pages/Register'
 import Verify from './pages/Verify'
+import Admin from './pages/Admin'
+import AdminLogin from './pages/AdminLogin'
+import MyPage from './pages/MyPage'
 
 const ComingSoon = ({ page }: { page: string }) => (
   <div style={{ textAlign: 'center', padding: '80px 20px' }}>
@@ -19,11 +22,7 @@ const ComingSoon = ({ page }: { page: string }) => (
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth()
   const [, setLocation] = useLocation()
-  if (loading) return (
-    <div style={{ textAlign: 'center', padding: 80, fontSize: 17, color: 'var(--gray-400)' }}>
-      잠깐만요, 확인 중이에요... ⏳
-    </div>
-  )
+  if (loading) return <div style={{ textAlign: 'center', padding: 80, fontSize: 17, color: 'var(--gray-400)' }}>잠깐만요, 확인 중이에요... ⏳</div>
   if (!user) { setLocation('/login'); return null }
   return <>{children}</>
 }
@@ -40,13 +39,17 @@ export default function App() {
   return (
     <Layout nickname={user?.nickname} points={user?.points} onLogout={signOut}>
       <Switch>
-        <Route path="/"           component={Landing} />
-        <Route path="/login"      component={Login} />
-        <Route path="/dashboard"> <PrivateRoute><Dashboard /></PrivateRoute></Route>
-        <Route path="/missions">  <PrivateRoute><Missions /></PrivateRoute></Route>
-        <Route path="/register">  <PrivateRoute><Register /></PrivateRoute></Route>
-        <Route path="/verify/:id"><PrivateRoute><Verify /></PrivateRoute></Route>
-        <Route path="/admin">     <PrivateRoute><ComingSoon page="관리자" /></PrivateRoute></Route>
+        <Route path="/"            component={Landing} />
+        <Route path="/login"       component={Login} />
+        <Route path="/admin-login" component={AdminLogin} />
+        <Route path="/dashboard">  <PrivateRoute><Dashboard /></PrivateRoute></Route>
+        <Route path="/missions">   <PrivateRoute><Missions /></PrivateRoute></Route>
+        <Route path="/register">   <PrivateRoute><Register /></PrivateRoute></Route>
+        <Route path="/verify/:id"> <PrivateRoute><Verify /></PrivateRoute></Route>
+        <Route path="/mypage">     <PrivateRoute><MyPage /></PrivateRoute></Route>
+        <Route path="/admin">      <Admin /></Route>
+        <Route path="/find-email">    <ComingSoon page="이메일 찾기" /></Route>
+        <Route path="/find-password"> <ComingSoon page="비밀번호 찾기" /></Route>
         <Route>
           <div style={{ textAlign: 'center', padding: '80px 20px' }}>
             <div style={{ fontSize: 60, marginBottom: 16 }}>😅</div>
