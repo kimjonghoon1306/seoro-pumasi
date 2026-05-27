@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Missions from './pages/Missions'
 import Register from './pages/Register'
+import Verify from './pages/Verify'
 
 const ComingSoon = ({ page }: { page: string }) => (
   <div style={{ textAlign: 'center', padding: '80px 20px' }}>
@@ -39,13 +40,13 @@ export default function App() {
   return (
     <Layout nickname={user?.nickname} points={user?.points} onLogout={signOut}>
       <Switch>
-        <Route path="/"          component={Landing} />
-        <Route path="/login"     component={Login} />
-        <Route path="/dashboard"><PrivateRoute><Dashboard /></PrivateRoute></Route>
-        <Route path="/missions"> <PrivateRoute><Missions /></PrivateRoute></Route>
-        <Route path="/register"> <PrivateRoute><Register /></PrivateRoute></Route>
-        <Route path="/verify/:id"><PrivateRoute><ComingSoon page="인증하기" /></PrivateRoute></Route>
-        <Route path="/admin">    <PrivateRoute><ComingSoon page="관리자" /></PrivateRoute></Route>
+        <Route path="/"           component={Landing} />
+        <Route path="/login"      component={Login} />
+        <Route path="/dashboard"> <PrivateRoute><Dashboard /></PrivateRoute></Route>
+        <Route path="/missions">  <PrivateRoute><Missions /></PrivateRoute></Route>
+        <Route path="/register">  <PrivateRoute><Register /></PrivateRoute></Route>
+        <Route path="/verify/:id"><PrivateRoute><Verify /></PrivateRoute></Route>
+        <Route path="/admin">     <PrivateRoute><ComingSoon page="관리자" /></PrivateRoute></Route>
         <Route>
           <div style={{ textAlign: 'center', padding: '80px 20px' }}>
             <div style={{ fontSize: 60, marginBottom: 16 }}>😅</div>
