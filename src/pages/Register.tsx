@@ -18,25 +18,26 @@ export default function Register() {
   const [loading, setLoading] = useState(false)
   const [error, setError]     = useState('')
 
+  // user null 체크 후 명시적 타입 지정
   if (!user) return null
+  const currentUser = user
 
   const costPerOne = type ? MISSION_POINTS[type].cost : 0
   const totalCost  = costPerOne * count
-  const canAfford  = user.points >= totalCost
+  const canAfford  = currentUser.points >= totalCost
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError('')
 
-    if (!type)          { setError('미션 종류를 선택해 주세요.'); return }
+    if (!type)           { setError('미션 종류를 선택해 주세요.'); return }
     if (!blogUrl.trim()) { setError('블로그 주소를 입력해 주세요.'); return }
-    if (!canAfford)     { setError(`포인트가 부족해요. 미션을 먼저 수행해서 포인트를 모아주세요!`); return }
+    if (!canAfford)      { setError('포인트가 부족해요. 미션을 먼저 수행해서 포인트를 모아주세요!'); return }
 
     setLoading(true)
     try {
-      // 미션 등록
       const { error: missionErr } = await supabase.from('missions').insert({
-        owner_id:    user.id,
+        owner_id:    currentUser.id,
         blog_url:    blogUrl.trim().startsWith('http') ? blogUrl.trim() : `https://blog.naver.com/${blogUrl.trim()}`,
         type,
         points:      MISSION_POINTS[type].earn,
@@ -46,11 +47,10 @@ export default function Register() {
       })
       if (missionErr) throw missionErr
 
-      // 포인트 차감
       const { error: pointErr } = await supabase
         .from('users')
-        .update({ points: user.points - totalCost })
-        .eq('id', user.id)
+        .update({ points: currentUser.points - totalCost })
+        .eq('id', currentUser.id)
       if (pointErr) throw pointErr
 
       setLocation('/dashboard')
@@ -71,13 +71,12 @@ export default function Register() {
           다른 분들이 미션을 완료하면 실제로 이웃이 생겨요 😊
         </p>
         <div className={styles.myPoint}>
-          내 포인트: <strong>⭐ {user.points.toLocaleString()} P</strong>
+          내 포인트: <strong>⭐ {currentUser.points.toLocaleString()} P</strong>
         </div>
       </div>
 
       <form onSubmit={handleSubmit} className={styles.form}>
 
-        {/* 1단계: 미션 종류 */}
         <div className={styles.section}>
           <h2 className={styles.sectionTitle}>
             <span className={styles.stepNum}>1</span>
@@ -99,7 +98,6 @@ export default function Register() {
           </div>
         </div>
 
-        {/* 2단계: 블로그 주소 */}
         <div className={styles.section}>
           <h2 className={styles.sectionTitle}>
             <span className={styles.stepNum}>2</span>
@@ -112,34 +110,22 @@ export default function Register() {
             value={blogUrl}
             onChange={e => setBlogUrl(e.target.value)}
           />
-          <p className={styles.hint}>
-            💡 블로그 아이디만 입력해도 괜찮아요!
-          </p>
+          <p className={styles.hint}>💡 블로그 아이디만 입력해도 괜찮아요!</p>
         </div>
 
-        {/* 3단계: 수량 */}
         <div className={styles.section}>
           <h2 className={styles.sectionTitle}>
             <span className={styles.stepNum}>3</span>
             몇 명에게 받고 싶으세요?
           </h2>
           <div className={styles.countWrap}>
-            <button
-              type="button"
-              className={styles.countBtn}
-              onClick={() => setCount(c => Math.max(1, c - 1))}
-            >－</button>
+            <button type="button" className={styles.countBtn} onClick={() => setCount(c => Math.max(1, c - 1))}>－</button>
             <span className={styles.countNum}>{count}명</span>
-            <button
-              type="button"
-              className={styles.countBtn}
-              onClick={() => setCount(c => Math.min(50, c + 1))}
-            >＋</button>
+            <button type="button" className={styles.countBtn} onClick={() => setCount(c => Math.min(50, c + 1))}>＋</button>
           </div>
           <p className={styles.hint}>최대 50명까지 설정할 수 있어요</p>
         </div>
 
-        {/* 포인트 요약 */}
         {type && (
           <div className={`${styles.summary} ${!canAfford ? styles.summaryRed : ''}`}>
             <div className={styles.summaryRow}>
