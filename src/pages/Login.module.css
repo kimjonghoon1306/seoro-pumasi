@@ -256,3 +256,39 @@
 @media (max-width: 520px) {
   .form { padding: 24px 20px 28px; }
 }
+
+/* 이메일/비밀번호 찾기 */
+.findLinks {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: -8px;
+}
+
+.findLink {
+  font-size: 14px;
+  color: var(--gray-400);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s;
+}
+.findLink:hover { color: var(--green); }
+
+.findDivider { color: var(--gray-200); font-size: 13px; }
+
+/* 관리자 톱니바퀴 */
+.adminGear {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  font-size: 28px;
+  opacity: 0.25;
+  transition: opacity 0.2s, transform 0.3s;
+  line-height: 1;
+  cursor: pointer;
+}
+.adminGear:hover {
+  opacity: 0.7;
+  transform: rotate(60deg);
+}

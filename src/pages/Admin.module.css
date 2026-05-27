@@ -1,0 +1,178 @@
+.wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background: var(--green);
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+  color: #fff;
+}
+
+.title { font-size: 24px; font-weight: 700; }
+.desc  { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 4px; }
+
+.logoutBtn {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: background 0.15s;
+}
+.logoutBtn:hover { background: rgba(255,255,255,0.3); }
+
+/* 탭 */
+.tabs {
+  display: flex;
+  gap: 8px;
+  background: var(--gray-100);
+  border-radius: 50px;
+  padding: 4px;
+}
+
+.tab {
+  flex: 1;
+  padding: 11px;
+  border-radius: 44px;
+  font-size: 15px;
+  font-weight: 500;
+  background: transparent;
+  color: var(--gray-600);
+  transition: all 0.15s;
+}
+
+.tabActive {
+  background: var(--green);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* 목록 */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  background: #fff;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--gray-200);
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.cardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cardInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.missionType {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--green);
+}
+
+.nickname, .blogUrl {
+  font-size: 14px;
+  color: var(--gray-600);
+}
+
+.date {
+  font-size: 12px;
+  color: var(--gray-400);
+}
+
+.pointBadge {
+  background: var(--yellow-light);
+  color: var(--yellow-dark);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* 스크린샷 */
+.screenshot {
+  width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.screenshot:hover { opacity: 0.9; }
+
+.screenshotHint {
+  font-size: 13px;
+  color: var(--gray-400);
+  text-align: center;
+}
+
+/* 버튼 */
+.btnRow {
+  display: flex;
+  gap: 10px;
+}
+
+.approveBtn {
+  flex: 1;
+  background: var(--green);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 13px;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s;
+}
+.approveBtn:hover { background: var(--green-dark); }
+
+.rejectBtn {
+  flex: 1;
+  background: var(--pink-light);
+  color: var(--pink-dark);
+  font-size: 16px;
+  font-weight: 700;
+  padding: 13px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--pink);
+  transition: background 0.15s;
+}
+.rejectBtn:hover { background: var(--pink); color: #fff; }
+
+.statusOk { color: var(--green);    font-size: 15px; font-weight: 700; text-align: center; }
+.statusNo { color: var(--pink-dark); font-size: 15px; font-weight: 700; text-align: center; }
+
+.center {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 17px;
+  color: var(--gray-400);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
