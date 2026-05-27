@@ -1,4 +1,4 @@
-import { useState } from 'wouter'
+import { useState } from 'react'
 import { useLocation, Link } from 'wouter'
 import { supabase } from '../lib/supabase'
 import styles from './AdminLogin.module.css'
@@ -52,7 +52,7 @@ export default function AdminLogin() {
                 onChange={e => setPassword(e.target.value)}
                 autoFocus
               />
-              <button type="button" className={styles.eyeBtn} onClick={() => setShowPw(v => !v)}>
+              <button type="button" className={styles.eyeBtn} onClick={() => setShowPw((v: boolean) => !v)}>
                 {showPw ? '🙈' : '👁️'}
               </button>
             </div>
