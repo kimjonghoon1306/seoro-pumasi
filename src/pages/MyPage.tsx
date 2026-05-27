@@ -15,6 +15,7 @@ export default function MyPage() {
   const [loading, setLoading]     = useState(false)
 
   if (!user) return null
+  const currentUser = user
 
   async function handleChangePw(e: React.FormEvent) {
     e.preventDefault()
@@ -29,7 +30,7 @@ export default function MyPage() {
     try {
       // 현재 비밀번호로 재인증
       const { error: signInErr } = await supabase.auth.signInWithPassword({
-        email: user.email,
+        email: currentUser.email,
         password: curPw,
       })
       if (signInErr) { setMsg('❌ 현재 비밀번호가 맞지 않아요.'); return }
@@ -52,16 +53,16 @@ export default function MyPage() {
 
       {/* 내 정보 */}
       <div className={styles.infoCard}>
-        <div className={styles.avatar}>{user.nickname[0]}</div>
+        <div className={styles.avatar}>{currentUser.nickname[0]}</div>
         <div className={styles.infoDetail}>
-          <h2 className={styles.nickname}>{user.nickname}님</h2>
-          <p className={styles.email}>📧 {user.email}</p>
-          <a href={user.blog_url} target="_blank" rel="noreferrer" className={styles.blogUrl}>
-            📝 {user.blog_url}
+          <h2 className={styles.nickname}>{currentUser.nickname}님</h2>
+          <p className={styles.email}>📧 {currentUser.email}</p>
+          <a href={currentUser.blog_url} target="_blank" rel="noreferrer" className={styles.blogUrl}>
+            📝 {currentUser.blog_url}
           </a>
         </div>
         <div className={styles.pointBox}>
-          <span className={styles.pointNum}>{user.points.toLocaleString()}</span>
+          <span className={styles.pointNum}>{currentUser.points.toLocaleString()}</span>
           <span className={styles.pointLabel}>보유 포인트</span>
         </div>
       </div>
