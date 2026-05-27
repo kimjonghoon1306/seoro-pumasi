@@ -17,18 +17,20 @@ export default function AdminLogin() {
     setError('')
     setLoading(true)
     try {
-      const { error: signInErr } = await supabase.auth.signInWithPassword({
+      const { data, error: signInErr } = await supabase.auth.signInWithPassword({
         email: ADMIN_EMAIL,
         password: password.trim(),
       })
       if (signInErr) {
-        setError('비밀번호가 맞지 않아요.')
+        setError(`오류: ${signInErr.message}`)
         return
       }
-      sessionStorage.setItem('admin_auth', 'true')
-      setLocation('/admin')
-    } catch {
-      setError('로그인 중 문제가 생겼어요.')
+      if (data.user) {
+        sessionStorage.setItem('admin_auth', 'true')
+        setLocation('/admin')
+      }
+    } catch (err: unknown) {
+      setError(`예외: ${(err as Error).message}`)
     } finally {
       setLoading(false)
     }
