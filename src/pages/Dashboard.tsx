@@ -2,10 +2,9 @@ import { Link } from 'wouter'
 import { useAuth } from '../hooks/useAuth'
 import { useMyMissions, useMyCompletions } from '../hooks/useMissions'
 import { MISSION_EMOJI, MISSION_LABELS } from '../types'
-import type { MissionType } from '../types'
+import type { Mission, Completion, MissionType } from '../types'
 import styles from './Dashboard.module.css'
 
-// 포인트 → 등급
 function getGrade(points: number) {
   if (points >= 1000) return { label: '🌳 숲',  color: '#1a6b45', desc: '최고 등급이에요! 대단해요!' }
   if (points >= 500)  return { label: '🌿 나무', color: '#2d9966', desc: '많은 이웃과 함께하고 있어요' }
@@ -13,7 +12,6 @@ function getGrade(points: number) {
   return                     { label: '🌰 씨앗', color: '#8bc34a', desc: '이제 막 시작했어요. 화이팅!' }
 }
 
-// 날짜 한국어 표시
 function formatDate(dateStr: string) {
   const d = new Date(dateStr)
   return `${d.getMonth() + 1}월 ${d.getDate()}일`
@@ -27,15 +25,15 @@ export default function Dashboard() {
   if (!user) return null
 
   const grade = getGrade(user.points)
-  const activeMissions  = missions.filter(m => m.status === 'active')
-  const doneMissions    = missions.filter(m => m.status === 'done')
-  const approvedCount   = completions.filter(c => c.status === 'approved').length
-  const pendingCount    = completions.filter(c => c.status === 'pending').length
+  const activeMissions = missions.filter((m: Mission) => m.status === 'active')
+  const doneMissions   = missions.filter((m: Mission) => m.status === 'done')
+  const approvedCount  = completions.filter((c: Completion) => c.status === 'approved').length
+  const pendingCount   = completions.filter((c: Completion) => c.status === 'pending').length
 
   return (
     <div className={styles.wrap}>
 
-      {/* ── 인사 + 포인트 배너 ── */}
+      {/* 인사 + 포인트 배너 */}
       <div className={styles.banner}>
         <div className={styles.bannerLeft}>
           <p className={styles.bannerGreet}>안녕하세요, <strong>{user.nickname}</strong>님! 👋</p>
@@ -46,7 +44,7 @@ export default function Dashboard() {
             </a>
           </p>
           <div className={styles.gradeChip} style={{ background: grade.color }}>
-            {grade.label} &nbsp;·&nbsp; {grade.desc}
+            {grade.label} · {grade.desc}
           </div>
         </div>
         <div className={styles.bannerRight}>
@@ -57,7 +55,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* ── 빠른 행동 버튼 ── */}
+      {/* 빠른 행동 버튼 */}
       <div className={styles.quickBtns}>
         <Link href="/missions" className={`${styles.quickBtn} ${styles.qbGreen}`}>
           <span className={styles.qbEmoji}>📋</span>
@@ -71,7 +69,7 @@ export default function Dashboard() {
         </Link>
       </div>
 
-      {/* ── 내 활동 통계 ── */}
+      {/* 통계 */}
       <h2 className={styles.sectionTitle}>📊 내 활동 현황</h2>
       <div className={styles.statGrid}>
         <div className={`${styles.statCard} ${styles.scGreen}`}>
@@ -96,7 +94,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* ── 내가 올린 미션 현황 ── */}
+      {/* 내가 올린 미션 */}
       <h2 className={styles.sectionTitle}>📌 내가 올린 미션</h2>
       {missions.length === 0 ? (
         <div className={styles.empty}>
@@ -106,7 +104,7 @@ export default function Dashboard() {
         </div>
       ) : (
         <div className={styles.missionList}>
-          {missions.slice(0, 5).map(m => (
+          {missions.slice(0, 5).map((m: Mission) => (
             <div key={m.id} className={styles.missionRow}>
               <span className={styles.missionEmoji}>{MISSION_EMOJI[m.type as MissionType]}</span>
               <div className={styles.missionInfo}>
@@ -130,7 +128,7 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* ── 최근 인증 내역 ── */}
+      {/* 최근 인증 내역 */}
       <h2 className={styles.sectionTitle}>🕐 최근 활동 내역</h2>
       {completions.length === 0 ? (
         <div className={styles.empty}>
@@ -140,7 +138,7 @@ export default function Dashboard() {
         </div>
       ) : (
         <div className={styles.recentList}>
-          {completions.map(c => (
+          {completions.map((c: Completion) => (
             <div key={c.id} className={styles.recentRow}>
               <span className={`${styles.recentStatus} ${
                 c.status === 'approved' ? styles.rsApproved :
@@ -155,7 +153,7 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* ── 포인트 안내 ── */}
+      {/* 포인트 안내 */}
       <div className={styles.pointGuide}>
         <h3 className={styles.guideTitle}>⭐ 포인트 안내</h3>
         <div className={styles.guideGrid}>
