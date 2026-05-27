@@ -29,15 +29,14 @@ type Tab = 'pending' | 'approved' | 'rejected' | 'settings'
 
 export default function Admin() {
   const [, setLocation] = useLocation()
-  const [rows, setRows]         = useState<CompletionRow[]>([])
-  const [loading, setLoading]   = useState(true)
-  const [tab, setTab]           = useState<Tab>('pending')
+  const [rows, setRows]       = useState<CompletionRow[]>([])
+  const [loading, setLoading] = useState(true)
+  const [tab, setTab]         = useState<Tab>('pending')
 
-  // 관리자 비밀번호 변경
-  const [curPw, setCurPw]       = useState('')
-  const [newPw, setNewPw]       = useState('')
+  // 비밀번호 변경
+  const [newPw, setNewPw]         = useState('')
   const [confirmPw, setConfirmPw] = useState('')
-  const [pwMsg, setPwMsg]       = useState('')
+  const [pwMsg, setPwMsg]         = useState('')
   const [pwLoading, setPwLoading] = useState(false)
 
   useEffect(() => {
@@ -85,18 +84,14 @@ export default function Admin() {
   async function changeAdminPassword(e: React.FormEvent) {
     e.preventDefault()
     setPwMsg('')
-
-    // 현재 비밀번호 확인
-    const { data } = await supabase.from('settings').select('value').eq('key', 'admin_password').single()
-    if (data?.value !== curPw) { setPwMsg('❌ 현재 비밀번호가 맞지 않아요.'); return }
-    if (newPw.length < 4)      { setPwMsg('❌ 새 비밀번호는 4자리 이상이어야 해요.'); return }
-    if (newPw !== confirmPw)   { setPwMsg('❌ 새 비밀번호가 서로 다르게 입력됐어요.'); return }
-
+    if (newPw.length < 4)   { setPwMsg('❌ 새 비밀번호는 4자리 이상이어야 해요.'); return }
+    if (newPw !== confirmPw) { setPwMsg('❌ 새 비밀번호가 서로 달라요.'); return }
     setPwLoading(true)
     try {
-      await supabase.from('settings').update({ value: newPw }).eq('key', 'admin_password')
+      const { error } = await supabase.auth.updateUser({ password: newPw })
+      if (error) throw error
       setPwMsg('✅ 비밀번호가 변경됐어요!')
-      setCurPw(''); setNewPw(''); setConfirmPw('')
+      setNewPw(''); setConfirmPw('')
     } catch {
       setPwMsg('❌ 변경 중 문제가 생겼어요.')
     } finally {
@@ -106,6 +101,7 @@ export default function Admin() {
 
   function logout() {
     sessionStorage.removeItem('admin_auth')
+    supabase.auth.signOut()
     setLocation('/login')
   }
 
@@ -119,7 +115,6 @@ export default function Admin() {
         <button className={styles.logoutBtn} onClick={logout}>로그아웃</button>
       </div>
 
-      {/* 탭 */}
       <div className={styles.tabs}>
         {([
           { key: 'pending',  label: '⏳ 승인 대기' },
@@ -127,41 +122,27 @@ export default function Admin() {
           { key: 'rejected', label: '❌ 반려됨' },
           { key: 'settings', label: '🔑 설정' },
         ] as { key: Tab; label: string }[]).map(t => (
-          <button
-            key={t.key}
-            className={`${styles.tab} ${tab === t.key ? styles.tabActive : ''}`}
-            onClick={() => setTab(t.key)}
-          >
+          <button key={t.key} className={`${styles.tab} ${tab === t.key ? styles.tabActive : ''}`} onClick={() => setTab(t.key)}>
             {t.label}
           </button>
         ))}
       </div>
 
-      {/* 설정 탭 */}
       {tab === 'settings' && (
         <div className={styles.settingsCard}>
           <h2 className={styles.settingsTitle}>🔑 관리자 비밀번호 변경</h2>
           <form onSubmit={changeAdminPassword} className={styles.settingsForm}>
             <label className={styles.label}>
-              현재 비밀번호
-              <input className={styles.input} type="password" value={curPw}
-                onChange={e => setCurPw(e.target.value)} placeholder="현재 비밀번호 입력" />
-            </label>
-            <label className={styles.label}>
               새 비밀번호
               <input className={styles.input} type="password" value={newPw}
-                onChange={e => setNewPw(e.target.value)} placeholder="새 비밀번호 입력 (4자리 이상)" />
+                onChange={e => setNewPw(e.target.value)} placeholder="새 비밀번호 (4자리 이상)" />
             </label>
             <label className={styles.label}>
               새 비밀번호 확인
               <input className={styles.input} type="password" value={confirmPw}
                 onChange={e => setConfirmPw(e.target.value)} placeholder="새 비밀번호 다시 입력" />
             </label>
-            {pwMsg && (
-              <div className={pwMsg.startsWith('✅') ? styles.msgOk : styles.msgErr}>
-                {pwMsg}
-              </div>
-            )}
+            {pwMsg && <div className={pwMsg.startsWith('✅') ? styles.msgOk : styles.msgErr}>{pwMsg}</div>}
             <button className={styles.settingsBtn} type="submit" disabled={pwLoading}>
               {pwLoading ? '변경 중...' : '🔑 비밀번호 변경하기'}
             </button>
@@ -169,15 +150,11 @@ export default function Admin() {
         </div>
       )}
 
-      {/* 인증 목록 */}
       {tab !== 'settings' && (
         loading ? (
           <div className={styles.center}>⏳ 불러오는 중...</div>
         ) : rows.length === 0 ? (
-          <div className={styles.center}>
-            <div style={{ fontSize: 48 }}>🙈</div>
-            <p>해당 항목이 없어요</p>
-          </div>
+          <div className={styles.center}><div style={{ fontSize: 48 }}>🙈</div><p>해당 항목이 없어요</p></div>
         ) : (
           <div className={styles.list}>
             {rows.map(row => (
@@ -191,12 +168,10 @@ export default function Admin() {
                   </div>
                   <span className={styles.pointBadge}>⭐ {row.missions?.points}P</span>
                 </div>
-
                 <a href={row.screenshot_url} target="_blank" rel="noreferrer">
                   <img src={row.screenshot_url} alt="인증 스크린샷" className={styles.screenshot} />
                 </a>
                 <p className={styles.screenshotHint}>📷 이미지 클릭하면 크게 볼 수 있어요</p>
-
                 {tab === 'pending' && (
                   <div className={styles.btnRow}>
                     <button className={styles.approveBtn} onClick={() => approve(row)}>✅ 승인하기</button>
