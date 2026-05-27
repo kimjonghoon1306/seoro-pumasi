@@ -15,20 +15,28 @@ export default function AdminLogin() {
     setError('')
     setLoading(true)
     try {
-      const { data } = await supabase
+      const { data, error: dbErr } = await supabase
         .from('settings')
         .select('value')
         .eq('key', 'admin_password')
         .single()
 
-      if (data?.value === password) {
+      if (dbErr) {
+        setError(`DB 오류: ${dbErr.message}`)
+        return
+      }
+
+      const saved = (data?.value ?? '').trim()
+      const input = password.trim()
+
+      if (saved === input) {
         sessionStorage.setItem('admin_auth', 'true')
         setLocation('/admin')
       } else {
-        setError('비밀번호가 맞지 않아요.')
+        setError(`비밀번호가 맞지 않아요. (입력: "${input}", 저장: "${saved}")`)
       }
-    } catch {
-      setError('확인 중 문제가 생겼어요. 잠시 후 다시 시도해 주세요.')
+    } catch (err: unknown) {
+      setError(`오류: ${(err as Error).message}`)
     } finally {
       setLoading(false)
     }
@@ -40,7 +48,6 @@ export default function AdminLogin() {
         <div className={styles.icon}>⚙️</div>
         <h2 className={styles.title}>관리자 로그인</h2>
         <p className={styles.desc}>관리자 전용 페이지입니다</p>
-
         <form onSubmit={handleSubmit} className={styles.form}>
           <label className={styles.label}>
             🔒 관리자 비밀번호
@@ -58,14 +65,11 @@ export default function AdminLogin() {
               </button>
             </div>
           </label>
-
           {error && <div className={styles.error}>⚠️ {error}</div>}
-
           <button className={styles.btn} type="submit" disabled={loading}>
             {loading ? '확인 중...' : '로그인'}
           </button>
         </form>
-
         <Link href="/login" className={styles.back}>← 일반 로그인으로 돌아가기</Link>
       </div>
     </div>
