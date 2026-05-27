@@ -1,4 +1,5 @@
 import Header from './Header'
+import ThemeBar from '../ui/ThemeBar'
 import styles from './Layout.module.css'
 
 interface LayoutProps {
@@ -11,6 +12,7 @@ interface LayoutProps {
 export default function Layout({ children, points, nickname, onLogout }: LayoutProps) {
   return (
     <div className={styles.root}>
+      <ThemeBar />
       <Header points={points} nickname={nickname} onLogout={onLogout} />
       <main className={styles.main}>
         {children}
