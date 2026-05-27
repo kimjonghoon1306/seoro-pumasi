@@ -68,3 +68,21 @@ img {
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 3px; }
+
+/* ── 다크모드 ── */
+[data-theme="dark"] {
+  --gray-100: #2a2a2a;
+  --gray-200: #3a3a3a;
+  --gray-400: #888888;
+  --gray-600: #bbbbbb;
+  --gray-900: #f0f0f0;
+  --green-pale:  #1a2e23;
+  --green-light: #1e3a2a;
+  --yellow-light: #2e2a10;
+  --pink-light:  #2e1020;
+}
+
+[data-theme="dark"] body {
+  background: #1a1a1a;
+  color: #f0f0f0;
+}
