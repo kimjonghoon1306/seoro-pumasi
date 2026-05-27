@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useState } from 'wouter'
 import { useLocation, Link } from 'wouter'
 import { supabase } from '../lib/supabase'
 import styles from './AdminLogin.module.css'
+
+const ADMIN_EMAIL = 's9653@naver.com'
 
 export default function AdminLogin() {
   const [password, setPassword] = useState('')
@@ -15,28 +17,18 @@ export default function AdminLogin() {
     setError('')
     setLoading(true)
     try {
-      const { data, error: dbErr } = await supabase
-        .from('settings')
-        .select('value')
-        .eq('key', 'admin_password')
-        .single()
-
-      if (dbErr) {
-        setError(`DB 오류: ${dbErr.message}`)
+      const { error: signInErr } = await supabase.auth.signInWithPassword({
+        email: ADMIN_EMAIL,
+        password: password.trim(),
+      })
+      if (signInErr) {
+        setError('비밀번호가 맞지 않아요.')
         return
       }
-
-      const saved = (data?.value ?? '').trim()
-      const input = password.trim()
-
-      if (saved === input) {
-        sessionStorage.setItem('admin_auth', 'true')
-        setLocation('/admin')
-      } else {
-        setError(`비밀번호가 맞지 않아요. (입력: "${input}", 저장: "${saved}")`)
-      }
-    } catch (err: unknown) {
-      setError(`오류: ${(err as Error).message}`)
+      sessionStorage.setItem('admin_auth', 'true')
+      setLocation('/admin')
+    } catch {
+      setError('로그인 중 문제가 생겼어요.')
     } finally {
       setLoading(false)
     }
