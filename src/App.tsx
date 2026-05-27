@@ -3,6 +3,7 @@ import { useAuth } from './hooks/useAuth'
 import Layout from './components/layout/Layout'
 import Landing from './pages/Landing'
 import Login from './pages/Login'
+import Dashboard from './pages/Dashboard'
 
 const ComingSoon = ({ page }: { page: string }) => (
   <div style={{ textAlign: 'center', padding: '80px 20px' }}>
@@ -12,7 +13,6 @@ const ComingSoon = ({ page }: { page: string }) => (
   </div>
 )
 
-// 로그인 안 한 사람은 로그인 페이지로
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth()
   const [, setLocation] = useLocation()
@@ -41,16 +41,12 @@ export default function App() {
   )
 
   return (
-    <Layout
-      nickname={user?.nickname}
-      points={user?.points}
-      onLogout={signOut}
-    >
+    <Layout nickname={user?.nickname} points={user?.points} onLogout={signOut}>
       <Switch>
         <Route path="/"          component={Landing} />
         <Route path="/login"     component={Login} />
         <Route path="/dashboard">
-          <PrivateRoute><ComingSoon page="내 현황" /></PrivateRoute>
+          <PrivateRoute><Dashboard /></PrivateRoute>
         </Route>
         <Route path="/missions">
           <PrivateRoute><ComingSoon page="미션 목록" /></PrivateRoute>
