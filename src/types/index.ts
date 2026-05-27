@@ -6,6 +6,8 @@ export interface User {
   nickname: string
   blog_url: string
   points: number
+  theme: 'light' | 'dark'
+  font_size: 'normal' | 'large' | 'xlarge'
   created_at: string
 }
 
@@ -34,8 +36,8 @@ export interface Completion {
 
 export const MISSION_LABELS: Record<MissionType, string> = {
   neighbor: '서로이웃 추가',
-  like: '공감 누르기',
-  comment: '댓글 달기',
+  like:     '공감 누르기',
+  comment:  '댓글 달기',
 }
 
 export const MISSION_POINTS: Record<MissionType, { earn: number; cost: number }> = {
