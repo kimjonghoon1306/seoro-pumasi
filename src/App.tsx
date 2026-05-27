@@ -4,6 +4,7 @@ import Layout from './components/layout/Layout'
 import Landing from './pages/Landing'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
+import Missions from './pages/Missions'
 
 const ComingSoon = ({ page }: { page: string }) => (
   <div style={{ textAlign: 'center', padding: '80px 20px' }}>
@@ -16,18 +17,12 @@ const ComingSoon = ({ page }: { page: string }) => (
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth()
   const [, setLocation] = useLocation()
-
   if (loading) return (
     <div style={{ textAlign: 'center', padding: 80, fontSize: 17, color: 'var(--gray-400)' }}>
       잠깐만요, 확인 중이에요... ⏳
     </div>
   )
-
-  if (!user) {
-    setLocation('/login')
-    return null
-  }
-
+  if (!user) { setLocation('/login'); return null }
   return <>{children}</>
 }
 
@@ -45,21 +40,11 @@ export default function App() {
       <Switch>
         <Route path="/"          component={Landing} />
         <Route path="/login"     component={Login} />
-        <Route path="/dashboard">
-          <PrivateRoute><Dashboard /></PrivateRoute>
-        </Route>
-        <Route path="/missions">
-          <PrivateRoute><ComingSoon page="미션 목록" /></PrivateRoute>
-        </Route>
-        <Route path="/register">
-          <PrivateRoute><ComingSoon page="미션 올리기" /></PrivateRoute>
-        </Route>
-        <Route path="/verify/:id">
-          <PrivateRoute><ComingSoon page="인증하기" /></PrivateRoute>
-        </Route>
-        <Route path="/admin">
-          <PrivateRoute><ComingSoon page="관리자" /></PrivateRoute>
-        </Route>
+        <Route path="/dashboard"><PrivateRoute><Dashboard /></PrivateRoute></Route>
+        <Route path="/missions"> <PrivateRoute><Missions /></PrivateRoute></Route>
+        <Route path="/register"> <PrivateRoute><ComingSoon page="미션 올리기" /></PrivateRoute></Route>
+        <Route path="/verify/:id"><PrivateRoute><ComingSoon page="인증하기" /></PrivateRoute></Route>
+        <Route path="/admin">    <PrivateRoute><ComingSoon page="관리자" /></PrivateRoute></Route>
         <Route>
           <div style={{ textAlign: 'center', padding: '80px 20px' }}>
             <div style={{ fontSize: 60, marginBottom: 16 }}>😅</div>
