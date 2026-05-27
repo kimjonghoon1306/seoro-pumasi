@@ -1,0 +1,107 @@
+.wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* 내 정보 */
+.infoCard {
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-mid) 100%);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: #fff;
+  box-shadow: var(--shadow-md);
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--yellow);
+  color: var(--green-dark);
+  font-size: 28px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.infoDetail { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.nickname   { font-size: 22px; font-weight: 700; }
+.email      { font-size: 14px; color: rgba(255,255,255,0.7); }
+.blogUrl    { font-size: 14px; color: var(--yellow); text-decoration: underline; text-underline-offset: 3px; word-break: break-all; }
+
+.pointBox {
+  background: rgba(255,255,255,0.15);
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: var(--radius-md);
+  padding: 14px 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.pointNum   { display: block; font-size: 28px; font-weight: 700; color: var(--yellow); }
+.pointLabel { display: block; font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+
+/* 비밀번호 카드 */
+.pwCard {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--gray-200);
+  padding: 28px 32px;
+  box-shadow: var(--shadow-sm);
+}
+
+.cardTitle { font-size: 20px; font-weight: 700; color: var(--green-dark); margin-bottom: 8px; }
+.cardDesc  { font-size: 15px; color: var(--gray-600); margin-bottom: 20px; }
+
+.form  { display: flex; flex-direction: column; gap: 18px; }
+.label { display: flex; flex-direction: column; gap: 8px; font-size: 16px; font-weight: 500; color: var(--gray-900); }
+
+.pwWrap { position: relative; }
+.pwWrap .input { padding-right: 52px; }
+.eyeBtn { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: transparent; font-size: 20px; padding: 4px; }
+
+.input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 17px;
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.15s;
+  color: var(--gray-900);
+}
+.input:focus { border-color: var(--green); }
+.input::placeholder { color: var(--gray-400); }
+
+.hint { font-size: 13px; color: var(--gray-400); }
+
+.msgOk  { background: var(--green-light); color: var(--green);    border-radius: var(--radius-sm); padding: 14px 16px; font-size: 15px; font-weight: 500; }
+.msgErr { background: var(--pink-light);  color: var(--pink-dark); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 15px; font-weight: 500; }
+
+.submitBtn {
+  width: 100%;
+  background: var(--green);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s, transform 0.1s;
+  margin-top: 4px;
+}
+.submitBtn:hover:not(:disabled) { background: var(--green-dark); transform: translateY(-1px); }
+.submitBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+@media (max-width: 500px) {
+  .infoCard { flex-direction: column; align-items: flex-start; }
+  .pointBox { width: 100%; }
+  .pwCard   { padding: 22px 18px; }
+}

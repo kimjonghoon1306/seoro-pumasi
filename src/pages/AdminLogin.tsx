@@ -1,20 +1,36 @@
 import { useState } from 'react'
-import { useLocation } from 'wouter'
+import { useLocation, Link } from 'wouter'
+import { supabase } from '../lib/supabase'
 import styles from './AdminLogin.module.css'
 
 export default function AdminLogin() {
   const [password, setPassword] = useState('')
+  const [showPw, setShowPw]     = useState(false)
   const [error, setError]       = useState('')
+  const [loading, setLoading]   = useState(false)
   const [, setLocation]         = useLocation()
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    const adminPw = import.meta.env.VITE_ADMIN_PASSWORD as string
-    if (password === adminPw) {
-      sessionStorage.setItem('admin_auth', 'true')
-      setLocation('/admin')
-    } else {
-      setError('비밀번호가 맞지 않아요.')
+    setError('')
+    setLoading(true)
+    try {
+      const { data } = await supabase
+        .from('settings')
+        .select('value')
+        .eq('key', 'admin_password')
+        .single()
+
+      if (data?.value === password) {
+        sessionStorage.setItem('admin_auth', 'true')
+        setLocation('/admin')
+      } else {
+        setError('비밀번호가 맞지 않아요.')
+      }
+    } catch {
+      setError('확인 중 문제가 생겼어요. 잠시 후 다시 시도해 주세요.')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -28,24 +44,29 @@ export default function AdminLogin() {
         <form onSubmit={handleSubmit} className={styles.form}>
           <label className={styles.label}>
             🔒 관리자 비밀번호
-            <input
-              className={styles.input}
-              type="password"
-              placeholder="비밀번호를 입력하세요"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              autoFocus
-            />
+            <div className={styles.pwWrap}>
+              <input
+                className={styles.input}
+                type={showPw ? 'text' : 'password'}
+                placeholder="비밀번호를 입력하세요"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                autoFocus
+              />
+              <button type="button" className={styles.eyeBtn} onClick={() => setShowPw(v => !v)}>
+                {showPw ? '🙈' : '👁️'}
+              </button>
+            </div>
           </label>
+
           {error && <div className={styles.error}>⚠️ {error}</div>}
-          <button className={styles.btn} type="submit">
-            로그인
+
+          <button className={styles.btn} type="submit" disabled={loading}>
+            {loading ? '확인 중...' : '로그인'}
           </button>
         </form>
 
-        <button className={styles.back} onClick={() => setLocation('/login')}>
-          ← 일반 로그인으로 돌아가기
-        </button>
+        <Link href="/login" className={styles.back}>← 일반 로그인으로 돌아가기</Link>
       </div>
     </div>
   )
