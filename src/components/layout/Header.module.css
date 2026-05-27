@@ -1,0 +1,152 @@
+.header {
+  background: var(--green);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 로고 */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoMark {
+  width: 40px;
+  height: 40px;
+  background: var(--yellow);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--green-dark);
+  flex-shrink: 0;
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.logoName {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.3px;
+}
+
+.logoDomain {
+  font-size: 11px;
+  color: rgba(255,255,255,0.55);
+}
+
+/* 우측 */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pointChip {
+  background: rgba(255,255,255,0.15);
+  border: 1.5px solid rgba(255,255,255,0.3);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.pointChip strong {
+  color: var(--yellow);
+  font-weight: 700;
+}
+
+.userArea {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nickname {
+  color: rgba(255,255,255,0.85);
+  font-size: 14px;
+}
+
+.logoutBtn {
+  background: transparent;
+  color: rgba(255,255,255,0.6);
+  font-size: 13px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: color 0.15s;
+}
+
+.logoutBtn:hover {
+  color: #fff;
+}
+
+.loginBtn {
+  background: var(--yellow);
+  color: var(--green-dark);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 10px 20px;
+  border-radius: 30px;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.loginBtn:hover {
+  background: #ffd84a;
+  transform: scale(1.03);
+}
+
+/* 하단 내비 */
+.nav {
+  background: var(--green-dark);
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 20px;
+}
+
+.navItem {
+  color: rgba(255,255,255,0.7);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-bottom: 3px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.navItem:hover {
+  color: #fff;
+}
+
+.navItem.active {
+  color: var(--yellow);
+  border-bottom-color: var(--yellow);
+}
+
+/* 반응형 */
+@media (max-width: 600px) {
+  .logoDomain { display: none; }
+  .nickname { display: none; }
+  .pointChip { font-size: 13px; padding: 5px 10px; }
+  .navItem { font-size: 13px; padding: 10px 12px; }
+}

@@ -1,0 +1,246 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+/* ── 히어로 ── */
+.hero {
+  text-align: center;
+  background: linear-gradient(160deg, var(--green) 0%, var(--green-mid) 100%);
+  border-radius: var(--radius-lg);
+  padding: 60px 24px 56px;
+  color: #fff;
+}
+
+.heroEmoji {
+  font-size: 64px;
+  margin-bottom: 16px;
+  line-height: 1;
+}
+
+.heroTitle {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.35;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+
+.heroDesc {
+  font-size: 18px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+
+.heroBtn {
+  display: inline-block;
+  background: var(--yellow);
+  color: var(--green-dark);
+  font-size: 20px;
+  font-weight: 700;
+  padding: 18px 40px;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.heroBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+}
+
+.heroSub {
+  margin-top: 14px;
+  font-size: 15px;
+  color: rgba(255,255,255,0.65);
+}
+
+/* ── 섹션 공통 ── */
+.sectionTitle {
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 28px;
+  color: var(--green-dark);
+}
+
+/* ── 3단계 ── */
+.stepList {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stepCard {
+  flex: 1;
+  background: #fff;
+  border-radius: var(--radius-md);
+  padding: 28px 20px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  border: 1.5px solid var(--gray-200);
+  position: relative;
+}
+
+.stepNum {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 32px;
+  background: var(--green);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stepEmoji {
+  font-size: 44px;
+  margin-bottom: 12px;
+  margin-top: 8px;
+}
+
+.stepTitle {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--gray-900);
+  line-height: 1.4;
+}
+
+.stepDesc {
+  font-size: 15px;
+  color: var(--gray-600);
+  line-height: 1.7;
+}
+
+.stepArrow {
+  font-size: 28px;
+  color: var(--gray-400);
+  flex-shrink: 0;
+}
+
+/* ── 포인트 ── */
+.pointGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.pointCard {
+  border-radius: var(--radius-md);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.pcGreen  { background: var(--green-light); }
+.pcYellow { background: var(--yellow-light); }
+.pcPink   { background: var(--pink-light); }
+
+.pointEmoji {
+  font-size: 36px;
+}
+
+.pointAction {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--gray-900);
+}
+
+.pointValue {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--green);
+}
+
+.pcYellow .pointValue { color: var(--yellow-dark); }
+.pcPink   .pointValue { color: var(--pink-dark); }
+
+.pointNote {
+  text-align: center;
+  font-size: 16px;
+  color: var(--gray-600);
+  background: var(--gray-100);
+  padding: 14px 20px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── FAQ ── */
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.faqItem {
+  background: #fff;
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  border: 1.5px solid var(--gray-200);
+}
+
+.faqQ {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 8px;
+}
+
+.faqA {
+  font-size: 16px;
+  color: var(--gray-600);
+  line-height: 1.7;
+}
+
+/* ── CTA ── */
+.cta {
+  text-align: center;
+  background: var(--green-light);
+  border-radius: var(--radius-lg);
+  padding: 48px 24px;
+}
+
+.ctaText {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--green-dark);
+  margin-bottom: 24px;
+}
+
+.ctaBtn {
+  display: inline-block;
+  background: var(--green);
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 18px 48px;
+  border-radius: 50px;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.ctaBtn:hover {
+  background: var(--green-dark);
+  transform: translateY(-2px);
+}
+
+/* ── 반응형 ── */
+@media (max-width: 720px) {
+  .heroTitle  { font-size: 26px; }
+  .heroBtn    { font-size: 17px; padding: 15px 28px; }
+  .stepList   { flex-direction: column; }
+  .stepArrow  { transform: rotate(90deg); }
+  .pointGrid  { grid-template-columns: 1fr; }
+  .sectionTitle { font-size: 22px; }
+}
