@@ -10,6 +10,7 @@ import Verify from './pages/Verify'
 import Admin from './pages/Admin'
 import AdminLogin from './pages/AdminLogin'
 import MyPage from './pages/MyPage'
+import FindPassword from './pages/FindPassword'
 
 const ComingSoon = ({ page }: { page: string }) => (
   <div style={{ textAlign: 'center', padding: '80px 20px' }}>
@@ -39,17 +40,17 @@ export default function App() {
   return (
     <Layout nickname={user?.nickname} points={user?.points} onLogout={signOut}>
       <Switch>
-        <Route path="/"            component={Landing} />
-        <Route path="/login"       component={Login} />
-        <Route path="/admin-login" component={AdminLogin} />
-        <Route path="/dashboard">  <PrivateRoute><Dashboard /></PrivateRoute></Route>
-        <Route path="/missions">   <PrivateRoute><Missions /></PrivateRoute></Route>
-        <Route path="/register">   <PrivateRoute><Register /></PrivateRoute></Route>
-        <Route path="/verify/:id"> <PrivateRoute><Verify /></PrivateRoute></Route>
-        <Route path="/mypage">     <PrivateRoute><MyPage /></PrivateRoute></Route>
-        <Route path="/admin">      <Admin /></Route>
-        <Route path="/find-email">    <ComingSoon page="이메일 찾기" /></Route>
-        <Route path="/find-password"> <ComingSoon page="비밀번호 찾기" /></Route>
+        <Route path="/"             component={Landing} />
+        <Route path="/login"        component={Login} />
+        <Route path="/admin-login"  component={AdminLogin} />
+        <Route path="/find-password" component={FindPassword} />
+        <Route path="/find-email">  <ComingSoon page="이메일 찾기" /></Route>
+        <Route path="/dashboard">   <PrivateRoute><Dashboard /></PrivateRoute></Route>
+        <Route path="/missions">    <PrivateRoute><Missions /></PrivateRoute></Route>
+        <Route path="/register">    <PrivateRoute><Register /></PrivateRoute></Route>
+        <Route path="/verify/:id">  <PrivateRoute><Verify /></PrivateRoute></Route>
+        <Route path="/mypage">      <PrivateRoute><MyPage /></PrivateRoute></Route>
+        <Route path="/admin">       <Admin /></Route>
         <Route>
           <div style={{ textAlign: 'center', padding: '80px 20px' }}>
             <div style={{ fontSize: 60, marginBottom: 16 }}>😅</div>
