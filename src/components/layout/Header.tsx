@@ -73,7 +73,7 @@ export default function Header({ points = 0, nickname, onLogout }: HeaderProps) 
               </svg>
             </div>
             <div className={styles.logoText}>
-              <span className={styles.logoName}>서로품앗이</span>
+              <span className={styles.logoName}>서로<br className={styles.logoBr}/>품앗이</span>
               <span className={styles.logoDomain}>seoro-pumasi.com</span>
             </div>
           </Link>
@@ -103,7 +103,7 @@ export default function Header({ points = 0, nickname, onLogout }: HeaderProps) 
                   <div className={styles.avatar}>{nickname[0]}</div>
                   <span className={styles.nickname}>{nickname}</span>
                 </div>
-                <button className={styles.logoutBtn} onClick={onLogout}>로그아웃</button>
+                <button className={styles.logoutBtn} onClick={onLogout} title="로그아웃">🚪</button>
               </>
             ) : (
               <Link href="/login" className={styles.loginBtn}>시작하기 →</Link>
