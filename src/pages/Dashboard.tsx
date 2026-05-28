@@ -204,12 +204,12 @@ export default function Dashboard() {
 
       {/* 빠른 버튼 */}
       <div className={`${styles.quickBtns} animate-fadeUp delay-100`}>
-        <Link href="/missions" className={`${styles.quickBtn} ${styles.qbGreen}`}>
+        <Link href="/missions" className={`${styles.quickBtn} ${styles.qbGreen} card-shine`}>
           <span className={styles.qbEmoji}>📋</span>
           <span className={styles.qbTitle}>미션 수행하기</span>
           <span className={styles.qbDesc}>다른 분 블로그 방문하고 포인트 받기</span>
         </Link>
-        <Link href="/register" className={`${styles.quickBtn} ${styles.qbYellow}`}>
+        <Link href="/register" className={`${styles.quickBtn} ${styles.qbYellow} card-shine`}>
           <span className={styles.qbEmoji}>✏️</span>
           <span className={styles.qbTitle}>미션 올리기</span>
           <span className={styles.qbDesc}>포인트 써서 내 블로그 이웃 늘리기</span>

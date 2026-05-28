@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'wouter'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../hooks/useAuth'
 import styles from './MyPage.module.css'
@@ -171,8 +172,7 @@ export default function MyPage() {
 
   return (
     <div className={styles.wrap}>
-
-      {/* 내 정보 카드 */}
+      <Link href="/dashboard" className="back-btn">← 대시보드로 돌아가기</Link>
       <div className={styles.infoCard}>
         <div className={styles.avatar}>{currentUser.nickname[0]}</div>
         <div className={styles.infoDetail}>

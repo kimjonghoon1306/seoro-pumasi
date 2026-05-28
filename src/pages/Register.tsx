@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useLocation } from 'wouter'
+import { useLocation, Link } from 'wouter'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../hooks/useAuth'
 import { MISSION_LABELS, MISSION_POINTS, MISSION_EMOJI } from '../types'
@@ -63,6 +63,7 @@ export default function Register() {
 
   return (
     <div className={styles.wrap}>
+      <Link href="/dashboard" className="back-btn">← 대시보드로 돌아가기</Link>
 
       <div className={styles.header}>
         <h1 className={styles.title}>✏️ 미션 올리기</h1>

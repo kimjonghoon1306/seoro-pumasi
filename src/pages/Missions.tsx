@@ -58,6 +58,7 @@ export default function Missions() {
 
   return (
     <div className={styles.wrap}>
+      <Link href="/dashboard" className="back-btn">← 대시보드로 돌아가기</Link>
 
       {/* 상단 안내 */}
       <div className={styles.topBanner}>
@@ -136,7 +137,7 @@ function MissionCard({ mission: m, isDone }: { mission: Mission; isDone: boolean
   const remaining = m.total_count - m.done_count
 
   return (
-    <div className={`${styles.card} ${isDone ? styles.cardDone : ''}`}>
+    <div className={`${styles.card} ${isDone ? styles.cardDone : ''} card-shine`}>
 
       {/* 완료 오버레이 뱃지 */}
       {isDone && (

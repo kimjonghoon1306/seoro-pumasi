@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useLocation, useParams } from 'wouter'
+import { useLocation, useParams, Link } from 'wouter'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../hooks/useAuth'
 import { MISSION_EMOJI, MISSION_LABELS } from '../types'
@@ -146,8 +146,7 @@ export default function Verify() {
 
   return (
     <div className={styles.wrap}>
-
-      {/* 미션 정보 */}
+      <Link href="/missions" className="back-btn">← 미션 목록으로 돌아가기</Link>
       <div className={styles.missionBox}>
         <div className={`${styles.typeBadge} ${styles['type_' + mission.type]}`}>
           {MISSION_EMOJI[mType]} {MISSION_LABELS[mType]}
