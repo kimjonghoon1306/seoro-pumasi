@@ -78,10 +78,15 @@ export default function Verify() {
       })
       if (compErr) throw compErr
 
-      // 4. 미션 done_count 증가
+      // 4. 미션 done_count 증가 + 완료 시 status → done 자동 처리
+      const newDoneCount = mission.done_count + 1
+      const isCompleted  = newDoneCount >= mission.total_count
       const { error: missionErr } = await supabase
         .from('missions')
-        .update({ done_count: mission.done_count + 1 })
+        .update({
+          done_count: newDoneCount,
+          ...(isCompleted ? { status: 'done' } : {}),
+        })
         .eq('id', mission.id)
       if (missionErr) throw missionErr
 
