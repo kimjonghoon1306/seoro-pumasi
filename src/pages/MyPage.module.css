@@ -1,107 +1,171 @@
+/* ── MyPage — 변수 전면 교체 + 모바일 최적화 ── */
 .wrap {
   max-width: 640px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 24px;
+  padding-bottom: var(--s16);
 }
 
-/* 내 정보 */
+/* 내 정보 카드 */
 .infoCard {
-  background: linear-gradient(135deg, var(--green) 0%, var(--green-mid) 100%);
-  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--g500) 0%, var(--g800) 100%);
+  border-radius: var(--r5);
   padding: 28px 32px;
   display: flex;
   align-items: center;
   gap: 20px;
   color: #fff;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
 }
-
 .avatar {
-  width: 64px;
-  height: 64px;
+  width: 68px;
+  height: 68px;
   border-radius: 50%;
-  background: var(--yellow);
-  color: var(--green-dark);
+  background: var(--gold);
+  color: var(--g900);
   font-size: 28px;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
 }
-
-.infoDetail { flex: 1; display: flex; flex-direction: column; gap: 6px; }
-.nickname   { font-size: 22px; font-weight: 700; }
-.email      { font-size: 14px; color: rgba(255,255,255,0.7); }
-.blogUrl    { font-size: 14px; color: var(--yellow); text-decoration: underline; text-underline-offset: 3px; word-break: break-all; }
+.infoDetail {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.nickname { font-size: 22px; font-weight: 700; }
+.email    { font-size: 14px; color: rgba(255,255,255,0.65); }
+.blogUrl  {
+  font-size: 14px;
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 .pointBox {
-  background: rgba(255,255,255,0.15);
-  border: 2px solid rgba(255,255,255,0.3);
-  border-radius: var(--radius-md);
-  padding: 14px 20px;
+  background: rgba(255,255,255,0.12);
+  border: 2px solid rgba(255,255,255,0.25);
+  border-radius: var(--r4);
+  padding: 16px 22px;
   text-align: center;
   flex-shrink: 0;
+  min-width: 100px;
 }
-.pointNum   { display: block; font-size: 28px; font-weight: 700; color: var(--yellow); }
-.pointLabel { display: block; font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+.pointNum   { display: block; font-size: 30px; font-weight: 700; color: var(--gold); font-family: var(--font-display); }
+.pointLabel { display: block; font-size: 13px; color: rgba(255,255,255,0.65); margin-top: 2px; }
 
 /* 비밀번호 카드 */
 .pwCard {
-  background: #fff;
-  border-radius: var(--radius-lg);
-  border: 1.5px solid var(--gray-200);
+  background: var(--bg-card);
+  border-radius: var(--r5);
+  border: 1.5px solid var(--border);
   padding: 28px 32px;
   box-shadow: var(--shadow-sm);
 }
-
-.cardTitle { font-size: 20px; font-weight: 700; color: var(--green-dark); margin-bottom: 8px; }
-.cardDesc  { font-size: 15px; color: var(--gray-600); margin-bottom: 20px; }
+.cardTitle { font-size: 20px; font-weight: 700; color: var(--g600); margin-bottom: 6px; }
+.cardDesc  { font-size: 15px; color: var(--text-muted); margin-bottom: 22px; line-height: 1.6; }
 
 .form  { display: flex; flex-direction: column; gap: 18px; }
-.label { display: flex; flex-direction: column; gap: 8px; font-size: 16px; font-weight: 500; color: var(--gray-900); }
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-main);
+}
 
 .pwWrap { position: relative; }
 .pwWrap .input { padding-right: 52px; }
-.eyeBtn { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: transparent; font-size: 20px; padding: 4px; }
+.eyeBtn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  font-size: 22px;
+  padding: 4px;
+  color: var(--text-muted);
+  transition: color 0.15s;
+}
+.eyeBtn:hover { color: var(--text-main); }
 
 .input {
   width: 100%;
-  padding: 14px 16px;
+  padding: 15px 18px;
   font-size: 17px;
-  border: 2px solid var(--gray-200);
-  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text-main);
+  border: 2px solid var(--border);
+  border-radius: var(--r3);
   outline: none;
   font-family: inherit;
   transition: border-color 0.15s;
-  color: var(--gray-900);
 }
-.input:focus { border-color: var(--green); }
-.input::placeholder { color: var(--gray-400); }
+.input:focus { border-color: var(--g400); }
+.input::placeholder { color: var(--text-muted); }
 
-.hint { font-size: 13px; color: var(--gray-400); }
+.hint { font-size: 13px; color: var(--text-muted); }
 
-.msgOk  { background: var(--green-light); color: var(--green);    border-radius: var(--radius-sm); padding: 14px 16px; font-size: 15px; font-weight: 500; }
-.msgErr { background: var(--pink-light);  color: var(--pink-dark); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 15px; font-weight: 500; }
+.msgOk {
+  background: rgba(34,160,90,0.1);
+  color: var(--g500);
+  border: 1px solid rgba(34,160,90,0.2);
+  border-radius: var(--r3);
+  padding: 14px 16px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.msgErr {
+  background: var(--pink-light);
+  color: var(--pink);
+  border: 1px solid rgba(232,82,138,0.2);
+  border-radius: var(--r3);
+  padding: 14px 16px;
+  font-size: 15px;
+  font-weight: 600;
+}
 
 .submitBtn {
   width: 100%;
-  background: var(--green);
+  background: linear-gradient(135deg, var(--g400) 0%, var(--g600) 100%);
   color: #fff;
   font-size: 18px;
   font-weight: 700;
-  padding: 16px;
-  border-radius: var(--radius-sm);
-  transition: background 0.15s, transform 0.1s;
+  padding: 18px;
+  border-radius: var(--r3);
+  transition: opacity 0.15s, transform 0.1s;
   margin-top: 4px;
+  min-height: 60px;
 }
-.submitBtn:hover:not(:disabled) { background: var(--green-dark); transform: translateY(-1px); }
-.submitBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+.submitBtn:hover:not(:disabled) {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+.submitBtn:disabled { opacity: 0.45; cursor: not-allowed; }
 
-@media (max-width: 500px) {
-  .infoCard { flex-direction: column; align-items: flex-start; }
-  .pointBox { width: 100%; }
-  .pwCard   { padding: 22px 18px; }
+/* ── 모바일 ── */
+@media (max-width: 640px) {
+  .infoCard { flex-direction: column; align-items: flex-start; padding: 24px 20px; gap: 16px; }
+  .avatar { width: 60px; height: 60px; font-size: 24px; }
+  .nickname { font-size: 20px; }
+  .blogUrl { white-space: normal; }
+  .pointBox { width: 100%; padding: 16px; }
+  .pointNum { font-size: 32px; }
+  .pwCard { padding: 24px 20px; }
+  .input { font-size: 18px; padding: 18px; }
+  .submitBtn { font-size: 20px; padding: 20px; min-height: 64px; }
+  .cardTitle { font-size: 19px; }
+  .label { font-size: 17px; }
 }
