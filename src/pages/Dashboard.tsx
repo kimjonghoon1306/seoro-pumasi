@@ -241,7 +241,7 @@ export default function Dashboard() {
       <div className={styles.cols}>
 
         {/* 내가 올린 미션 */}
-        <div className={`${styles.section} ${styles.colMain} reveal`}>
+        <div className={`${styles.section} ${styles.colMain} animate-fadeUp delay-300`}>
           <div className={styles.sectionHead}>
             <h2 className={styles.sectionTitle}>📌 내가 올린 미션</h2>
             <Link href="/register" className={styles.sectionMore}>+ 새 미션 올리기</Link>
@@ -278,7 +278,7 @@ export default function Dashboard() {
 
         {/* 오른쪽: 최근 활동 + 포인트 안내 */}
         <div className={styles.colSide}>
-          <div className={`${styles.section} reveal`}>
+          <div className={`${styles.section} animate-fadeUp delay-400`}>
             <div className={styles.sectionHead}>
               <h2 className={styles.sectionTitle}>🕐 최근 활동 내역</h2>
             </div>
@@ -302,7 +302,7 @@ export default function Dashboard() {
             )}
           </div>
 
-          <div className={`${styles.section} reveal`}>
+          <div className={`${styles.section} animate-fadeUp delay-500`}>
             <div className={styles.pointGuide}>
               <h3 className={styles.guideTitle}>⭐ 포인트 안내</h3>
               <div className={styles.guideGrid}>
