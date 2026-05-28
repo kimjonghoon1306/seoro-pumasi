@@ -11,6 +11,7 @@ import Admin from './pages/Admin'
 import AdminLogin from './pages/AdminLogin'
 import MyPage from './pages/MyPage'
 import FindPassword from './pages/FindPassword'
+import ResetPassword from './pages/ResetPassword'
 import { useEffect } from 'react'
 
 // 관리자 라우트는 Layout 없이 단독 렌더
@@ -76,7 +77,8 @@ function AppWithLayout() {
       <Switch>
         <Route path="/"              component={Landing} />
         <Route path="/login"         component={Login} />
-        <Route path="/find-password" component={FindPassword} />
+        <Route path="/find-password"  component={FindPassword} />
+        <Route path="/reset-password" component={ResetPassword} />
         <Route path="/find-email">   <ComingSoon page="이메일 찾기" /></Route>
         <Route path="/dashboard">    <PrivateRoute><Dashboard /></PrivateRoute></Route>
         <Route path="/missions">     <PrivateRoute><Missions /></PrivateRoute></Route>
