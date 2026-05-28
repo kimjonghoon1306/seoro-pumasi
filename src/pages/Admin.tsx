@@ -58,6 +58,7 @@ export default function Admin() {
     row: CompletionRow; type: 'approve' | 'reject'
   } | null>(null)
   const [actionLoading, setActionLoading] = useState(false)
+  const [selectedIds, setSelectedIds]     = useState<Set<string>>(new Set())
 
   /* 인증 확인 */
   useEffect(() => {
@@ -116,7 +117,7 @@ export default function Admin() {
   }, [tab])
 
   useEffect(() => { loadStats() }, [loadStats])
-  useEffect(() => { loadData()  }, [loadData])
+  useEffect(() => { loadData(); setSelectedIds(new Set()) }, [loadData])
   useEffect(() => {
     if (tab === 'settings') loadSiteStats()
   }, [tab, loadSiteStats])
@@ -143,6 +144,51 @@ export default function Admin() {
     try {
       await supabase.from('completions').update({ status: 'rejected' }).eq('id', row.id)
       setConfirmAction(null)
+      loadData(); loadStats()
+    } finally { setActionLoading(false) }
+  }
+
+
+  /* 체크박스 토글 */
+  function toggleSelect(id: string) {
+    setSelectedIds(prev => {
+      const next = new Set(prev)
+      next.has(id) ? next.delete(id) : next.add(id)
+      return next
+    })
+  }
+  function toggleAll() {
+    if (selectedIds.size === rows.length) setSelectedIds(new Set())
+    else setSelectedIds(new Set(rows.map(r => r.id)))
+  }
+
+  /* 일괄 승인 */
+  async function bulkApprove() {
+    if (selectedIds.size === 0) return
+    setActionLoading(true)
+    try {
+      const targets = rows.filter(r => selectedIds.has(r.id))
+      await Promise.all(targets.map(async row => {
+        await supabase.from('completions').update({ status: 'approved' }).eq('id', row.id)
+        if (row.users && row.missions) {
+          await supabase.from('users')
+            .update({ points: row.users.points + row.missions.points })
+            .eq('id', row.user_id)
+        }
+      }))
+      setSelectedIds(new Set())
+      loadData(); loadStats()
+    } finally { setActionLoading(false) }
+  }
+
+  /* 일괄 반려 */
+  async function bulkReject() {
+    if (selectedIds.size === 0) return
+    setActionLoading(true)
+    try {
+      const ids = Array.from(selectedIds)
+      await supabase.from('completions').update({ status: 'rejected' }).in('id', ids)
+      setSelectedIds(new Set())
       loadData(); loadStats()
     } finally { setActionLoading(false) }
   }
@@ -295,6 +341,39 @@ export default function Admin() {
               <button className={styles.refreshBtn} onClick={loadData}>🔄 새로고침</button>
             )}
           </div>
+
+          {/* 일괄 처리 툴바 — pending 탭 + 항목 있을 때만 */}
+          {tab === 'pending' && rows.length > 0 && (
+            <div className={styles.bulkBar}>
+              <label className={styles.bulkCheck}>
+                <input
+                  type="checkbox"
+                  checked={selectedIds.size === rows.length && rows.length > 0}
+                  onChange={toggleAll}
+                />
+                <span>전체 선택 ({selectedIds.size}/{rows.length})</span>
+              </label>
+              {selectedIds.size > 0 && (
+                <div className={styles.bulkActions}>
+                  <span className={styles.bulkCount}>{selectedIds.size}건 선택됨</span>
+                  <button
+                    className={styles.bulkRejectBtn}
+                    onClick={bulkReject}
+                    disabled={actionLoading}
+                  >
+                    ❌ 선택 반려
+                  </button>
+                  <button
+                    className={styles.bulkApproveBtn}
+                    onClick={bulkApprove}
+                    disabled={actionLoading}
+                  >
+                    ✅ 선택 승인
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* ── 설정 탭 ── */}
           {tab === 'settings' && (
@@ -472,7 +551,15 @@ export default function Admin() {
             ) : (
               <div className={styles.cardList}>
                 {rows.map(row => (
-                  <div key={row.id} className={styles.card}>
+                  <div key={row.id} className={`${styles.card} ${tab === 'pending' && selectedIds.has(row.id) ? styles.cardSelected : ''}`}>
+                    {tab === 'pending' && (
+                      <label className={styles.cardCheckbox}>
+                        <input type="checkbox"
+                          checked={selectedIds.has(row.id)}
+                          onChange={() => toggleSelect(row.id)}/>
+                        <span className={styles.cardCheckLabel}>선택</span>
+                      </label>
+                    )}
                     <div className={styles.cardHeader}>
                       <div className={styles.cardMeta}>
                         <span className={styles.typeTag}>

@@ -504,3 +504,100 @@
 [data-theme="light"] .mobileTabActive     { background: rgba(34,160,90,0.08) !important; }
 [data-theme="light"] .mobileTabLabel      { color: var(--text-muted); }
 [data-theme="light"] .mobileTabActive .mobileTabLabel { color: var(--g600); }
+
+/* ════════ 일괄 처리 툴바 ════════ */
+.bulkBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r3);
+  padding: 14px 20px;
+  margin-bottom: 16px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.bulkCheck {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-sub);
+  cursor: pointer;
+}
+.bulkCheck input[type="checkbox"] {
+  width: 20px; height: 20px;
+  accent-color: var(--g500);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.bulkActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.bulkCount {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--g500);
+  background: rgba(34,160,90,0.1);
+  padding: 6px 14px;
+  border-radius: 99px;
+}
+.bulkApproveBtn {
+  background: linear-gradient(135deg, var(--g400), var(--g600));
+  color: #fff;
+  font-size: 15px; font-weight: 700;
+  padding: 10px 20px;
+  border-radius: var(--r3);
+  transition: opacity 0.15s;
+  min-height: 44px;
+}
+.bulkApproveBtn:hover:not(:disabled) { opacity: 0.9; }
+.bulkApproveBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+.bulkRejectBtn {
+  background: var(--pink-light);
+  color: var(--pink);
+  font-size: 15px; font-weight: 700;
+  padding: 10px 20px;
+  border-radius: var(--r3);
+  border: 1.5px solid var(--pink);
+  transition: all 0.15s;
+  min-height: 44px;
+}
+.bulkRejectBtn:hover:not(:disabled) { background: var(--pink); color: #fff; }
+.bulkRejectBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* 선택된 카드 하이라이트 */
+.cardSelected {
+  border-color: var(--g400) !important;
+  background: rgba(34,160,90,0.04) !important;
+  box-shadow: 0 0 0 2px rgba(34,160,90,0.15) !important;
+}
+
+/* 카드 체크박스 */
+.cardCheckbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+.cardCheckbox input[type="checkbox"] {
+  width: 22px; height: 22px;
+  accent-color: var(--g500);
+  cursor: pointer;
+}
+.cardCheckLabel {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .bulkBar { padding: 12px 14px; }
+  .bulkApproveBtn, .bulkRejectBtn { font-size: 14px; padding: 10px 14px; }
+}
