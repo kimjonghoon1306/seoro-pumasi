@@ -411,3 +411,96 @@
   .siteStatsGrid  { grid-template-columns: repeat(2, 1fr); }
   .emptyStats     { gap: 16px; padding: 12px 16px; }
 }
+
+/* ════════════════════════════════════════
+   라이트 모드 — 사이드바 + 모바일바 전환
+════════════════════════════════════════ */
+[data-theme="light"] .sidebar {
+  background: #fff;
+  border-right: 1px solid var(--border);
+  box-shadow: 2px 0 16px rgba(0,0,0,0.06);
+}
+[data-theme="light"] .brandName { color: var(--g800); }
+[data-theme="light"] .brandSub  { color: var(--text-muted); }
+
+[data-theme="light"] .statSummary {
+  background: var(--bg-subtle);
+  border-color: var(--border);
+}
+[data-theme="light"] .statLab     { color: var(--text-muted); }
+[data-theme="light"] .statDivider { background: var(--border); }
+
+[data-theme="light"] .sideBtn {
+  color: var(--text-sub);
+}
+[data-theme="light"] .sideBtn:hover {
+  background: var(--bg-subtle);
+  color: var(--text-main);
+}
+[data-theme="light"] .sideBtnActive {
+  background: var(--g500) !important;
+  color: #fff !important;
+}
+[data-theme="light"] .sideBtnEmoji { filter: none; }
+
+[data-theme="light"] .badge         { }
+[data-theme="light"] .badgeGray {
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+}
+
+[data-theme="light"] .sideThemeBtn {
+  color: var(--text-sub);
+  background: var(--bg-subtle);
+  border-color: var(--border);
+}
+[data-theme="light"] .sideThemeBtn:hover {
+  background: var(--border);
+  color: var(--text-main);
+  border-color: var(--border-mid);
+}
+
+[data-theme="light"] .sideTip {
+  background: rgba(34,160,90,0.06);
+  border-color: rgba(34,160,90,0.2);
+}
+[data-theme="light"] .sideTipTitle { color: var(--g600); }
+[data-theme="light"] .sideTipList li { color: var(--text-muted); }
+
+[data-theme="light"] .sideBottom {
+  border-top-color: var(--border);
+}
+[data-theme="light"] .logoutBtn {
+  color: var(--text-muted);
+}
+[data-theme="light"] .logoutBtn:hover {
+  background: var(--pink-light);
+  color: var(--pink);
+}
+
+/* 모바일 상단바 라이트 */
+[data-theme="light"] .mobileTopBar {
+  background: #fff;
+  border-bottom-color: var(--border);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+[data-theme="light"] .mobileTopTitle { color: var(--g800); }
+[data-theme="light"] .mobileThemeBtn {
+  background: var(--bg-subtle);
+  color: var(--text-sub);
+}
+[data-theme="light"] .mobileThemeBtn:hover { background: var(--border); }
+[data-theme="light"] .mobileLogoutBtn { color: var(--text-muted); }
+[data-theme="light"] .mobileLogoutBtn:hover { color: var(--pink); }
+[data-theme="light"] .mobileDashBtn { background: var(--gold-light); }
+
+/* 모바일 하단 탭바 라이트 */
+[data-theme="light"] .mobileTabBar {
+  background: #fff;
+  border-top-color: var(--border);
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+}
+[data-theme="light"] .mobileTab:hover     { background: var(--bg-subtle); }
+[data-theme="light"] .mobileTabActive     { background: rgba(34,160,90,0.08) !important; }
+[data-theme="light"] .mobileTabLabel      { color: var(--text-muted); }
+[data-theme="light"] .mobileTabActive .mobileTabLabel { color: var(--g600); }
