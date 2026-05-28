@@ -9,7 +9,7 @@
 }
 
 .header.scrolled {
-  background: rgba(6,26,14,0.92);
+  background: #0a2a16;
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
   box-shadow: 0 1px 0 rgba(255,255,255,0.06),
@@ -183,9 +183,8 @@
 
 /* 테마바 */
 .themeBar {
-  background: rgba(0,0,0,0.4) !important;
-  background: rgba(0,0,0,0.3);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  background: #061a0e;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
   display: flex;
   align-items: center;
   justify-content: flex-end;
