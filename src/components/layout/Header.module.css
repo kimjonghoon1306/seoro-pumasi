@@ -176,7 +176,7 @@
   text-decoration: none;
 }
 .loginBtn:hover {
-  background: #fff;
+  background: var(--n000);
   transform: scale(1.04);
   box-shadow: var(--shadow-gold);
 }
@@ -339,7 +339,7 @@
    라이트 모드 헤더 전환
 ════════════════════════════════ */
 [data-theme="light"] .header {
-  background: #fff;
+  background: var(--bg-card);
   box-shadow: 0 1px 0 var(--border);
 }
 [data-theme="light"] .header.scrolled {
@@ -418,7 +418,7 @@
 
 /* 모바일 드로어 */
 [data-theme="light"] .drawerPanel {
-  background: #fff;
+  background: var(--bg-card);
   border-left: 1px solid var(--border);
   box-shadow: -8px 0 48px rgba(0,0,0,0.12);
 }
