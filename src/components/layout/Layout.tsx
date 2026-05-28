@@ -1,5 +1,5 @@
+import { useEffect } from 'react'
 import Header from './Header'
-import ThemeBar from '../ui/ThemeBar'
 import styles from './Layout.module.css'
 
 interface LayoutProps {
@@ -10,15 +10,36 @@ interface LayoutProps {
 }
 
 export default function Layout({ children, points, nickname, onLogout }: LayoutProps) {
+  // 스크롤 트리거 Intersection Observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible')
+            observer.unobserve(e.target)
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    )
+    const elements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right')
+    elements.forEach(el => observer.observe(el))
+    return () => observer.disconnect()
+  })
+
   return (
     <div className={styles.root}>
-      <ThemeBar />
       <Header points={points} nickname={nickname} onLogout={onLogout} />
-      <main className={styles.main}>
-        {children}
-      </main>
+      <main className={styles.main}>{children}</main>
       <footer className={styles.footer}>
-        <p>© 2025 서로품앗이 · 함께 키우는 블로그 이웃</p>
+        <div className={styles.footerInner}>
+          <div className={styles.footerLogo}>
+            <span className={styles.footerLogoText}>서로품앗이</span>
+            <span className={styles.footerTagline}>함께 키우는 블로그 이웃</span>
+          </div>
+          <p className={styles.footerCopy}>© 2025 서로품앗이. All rights reserved.</p>
+        </div>
       </footer>
     </div>
   )
