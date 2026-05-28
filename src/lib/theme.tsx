@@ -19,7 +19,7 @@ const Ctx = createContext<ThemeCtx>({
 })
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme,    setTheme]     = useState<Theme>('light')
+  const [theme,    setTheme]     = useState<Theme>('dark')
   const [fontSize, setFontSize_] = useState<FontSize>('normal')
   const [userId,   setUserId]    = useState<string | null>(null)
 
@@ -39,7 +39,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       } else {
         setUserId(null)
         // 로그아웃 시 localStorage 기본값
-        setTheme((localStorage.getItem('theme') as Theme) || 'light')
+        setTheme((localStorage.getItem('theme') as Theme) || 'dark')
         setFontSize_((localStorage.getItem('fontSize') as FontSize) || 'normal')
       }
     })
@@ -106,7 +106,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       if (data?.font_size) setFontSize_(data.font_size as FontSize)
     } catch {
       // 실패 시 localStorage 사용
-      setTheme((localStorage.getItem('theme') as Theme) || 'light')
+      setTheme((localStorage.getItem('theme') as Theme) || 'dark')
       setFontSize_((localStorage.getItem('fontSize') as FontSize) || 'normal')
     }
   }
