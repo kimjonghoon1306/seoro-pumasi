@@ -4,7 +4,7 @@ import { supabase } from '../lib/supabase'
 import { useTheme } from '../lib/theme'
 import styles from './AdminLogin.module.css'
 
-const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL || 's9653@naver.com'
+const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL as string
 
 export default function AdminLogin() {
   const [password, setPassword] = useState('')
@@ -17,6 +17,10 @@ export default function AdminLogin() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError('')
+    if (!ADMIN_EMAIL) {
+      setError('관리자 설정이 완료되지 않았어요. (.env 파일을 확인해 주세요)')
+      return
+    }
     setLoading(true)
     try {
       const { data, error: signInErr } = await supabase.auth.signInWithPassword({
