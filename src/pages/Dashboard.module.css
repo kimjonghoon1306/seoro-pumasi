@@ -479,7 +479,7 @@
   padding: 14px 20px;
   cursor: pointer;
   box-shadow: 0 8px 32px rgba(34,160,90,0.45), 0 0 0 0 rgba(34,160,90,0.4);
-  animation: floatBounce 2.5s ease-in-out infinite, floatPulse 2.5s ease-in-out infinite;
+  animation: floatBounce 2.2s ease-in-out infinite;
   transition: transform 0.15s, box-shadow 0.15s;
   min-width: 80px;
 }
@@ -502,13 +502,8 @@
 
 @keyframes floatBounce {
   0%, 100% { transform: translateY(0px); }
-  30%       { transform: translateY(-10px); }
-  60%       { transform: translateY(-4px); }
-  80%       { transform: translateY(-8px); }
-}
-@keyframes floatPulse {
-  0%, 100% { box-shadow: 0 8px 32px rgba(34,160,90,0.45), 0 0 0 0 rgba(34,160,90,0.4); }
-  50%       { box-shadow: 0 8px 32px rgba(34,160,90,0.45), 0 0 0 12px rgba(34,160,90,0); }
+  40%       { transform: translateY(-10px); }
+  70%       { transform: translateY(-5px); }
 }
 
 @media (max-width: 640px) {
