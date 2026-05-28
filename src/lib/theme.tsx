@@ -73,12 +73,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const root = document.documentElement
     if (theme === 'dark') {
       root.setAttribute('data-theme', 'dark')
-      document.body.style.background = '#1a1a1a'
-      document.body.style.color      = '#f0f0f0'
+      root.style.background          = '#0c1a12'
+      document.body.style.background = '#0c1a12'
+      document.body.style.color      = ''
     } else {
       root.setAttribute('data-theme', 'light')
-      document.body.style.background = '#f4f4f4'
-      document.body.style.color      = '#1a1a1a'
+      root.style.background          = '#eef2f0'
+      document.body.style.background = '#eef2f0'
+      document.body.style.color      = ''
     }
     localStorage.setItem('theme', theme)
   }, [theme])
