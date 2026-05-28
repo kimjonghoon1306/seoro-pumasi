@@ -1,12 +1,17 @@
 /* ── Verify — 변수 전면 교체 + 모바일 최적화 ── */
 .wrap {
-  max-width: 640px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 24px;
   padding-bottom: var(--s16);
+  align-items: start;
 }
+/* 미션 정보박스 — 전체 너비 */
+.missionBox { grid-column: 1 / -1; }
+/* 완료화면 — 전체 너비 */
+.doneWrap { grid-column: 1 / -1; max-width: 560px; margin: 40px auto; }
+.center   { grid-column: 1 / -1; }
 
 .center {
   text-align: center;
@@ -272,4 +277,10 @@
   .pointInfo { font-size: 17px; }
   .pointInfo strong { font-size: 20px; }
   .blogUrl { font-size: 17px; }
+}
+
+@media (max-width: 768px) {
+  .wrap {
+    grid-template-columns: 1fr;
+  }
 }

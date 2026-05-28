@@ -3,6 +3,7 @@ import { useAuth } from '../hooks/useAuth'
 import { useMyMissions, useMyCompletions } from '../hooks/useMissions'
 import { MISSION_EMOJI, MISSION_LABELS } from '../types'
 import type { Mission, Completion, MissionType } from '../types'
+import { useState, useEffect } from 'react'
 import styles from './Dashboard.module.css'
 
 function getGrade(p: number) {
@@ -11,12 +12,146 @@ function getGrade(p: number) {
   if (p >= 100)  return { label: '🌱 새싹', desc: '잘 하고 계세요!' }
   return               { label: '🌰 씨앗', desc: '이제 시작해요!' }
 }
-
 function formatDate(d: string) {
   const date = new Date(d)
   return `${date.getMonth()+1}/${date.getDate()}`
 }
 
+/* ── 슬라이드 데이터 ── */
+const SLIDES = [
+  {
+    emoji: '🌱',
+    tag: '서로품앗이란?',
+    title: '블로거들의\n품앗이 커뮤니티',
+    desc: '서로 방문하고, 응원하며, 함께 성장하는\n네이버 블로거들의 따뜻한 공간이에요',
+    bg: 'linear-gradient(135deg, #061a0e 0%, #0f3d20 50%, #1a6b45 100%)',
+    accent: '#4cc87a',
+  },
+  {
+    emoji: '🤝',
+    tag: '서로이웃 품앗이',
+    title: '이웃을 늘리는\n가장 따뜻한 방법',
+    desc: '내가 이웃 추가하면 상대방도 추가해줘요\n진짜 관심 있는 이웃이 자연스럽게 생겨요',
+    bg: 'linear-gradient(135deg, #0a2a16 0%, #155228 50%, #22a05a 100%)',
+    accent: '#f5c842',
+  },
+  {
+    emoji: '💛',
+    tag: '공감 품앗이',
+    title: '내 글이\n더 많은 사람에게',
+    desc: '공감을 주고받으면 검색 노출이 높아져요\n서로의 글이 더 널리 퍼져나가요',
+    bg: 'linear-gradient(135deg, #1a1a00 0%, #3d3000 50%, #7a6000 100%)',
+    accent: '#f5c842',
+  },
+  {
+    emoji: '💬',
+    tag: '댓글 품앗이',
+    title: '진심 어린 댓글로\n서로를 응원해요',
+    desc: '30자 이상의 진심 어린 댓글을 달아주세요\n블로그가 더 활성화되고 함께 성장해요',
+    bg: 'linear-gradient(135deg, #0d1a2e 0%, #1a3050 50%, #2a5080 100%)',
+    accent: '#7eb8ff',
+  },
+  {
+    emoji: '⭐',
+    tag: '포인트 시스템',
+    title: '활동할수록\n이웃이 늘어나요',
+    desc: '서로이웃 +10P · 공감 +3P · 댓글 +5P\n모은 포인트로 내 미션을 올려 이웃을 늘려요',
+    bg: 'linear-gradient(135deg, #1a0a00 0%, #3d2000 50%, #7a4000 100%)',
+    accent: '#ff9f40',
+  },
+]
+
+function CinematicSlider() {
+  const [cur, setCur] = useState(0)
+  const [animating, setAnimating] = useState(false)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setAnimating(true)
+      setTimeout(() => {
+        setCur(c => (c + 1) % SLIDES.length)
+        setAnimating(false)
+      }, 400)
+    }, 5000)
+    return () => clearInterval(timer)
+  }, [])
+
+  function goTo(i: number) {
+    if (i === cur) return
+    setAnimating(true)
+    setTimeout(() => { setCur(i); setAnimating(false) }, 300)
+  }
+
+  const slide = SLIDES[cur]
+
+  return (
+    <div className={styles.slider}>
+      <div
+        className={`${styles.slide} ${animating ? styles.slideOut : styles.slideIn}`}
+        style={{ background: slide.bg }}
+      >
+        {/* 배경 격자 패턴 */}
+        <div className={styles.slideGrid}/>
+
+        {/* 슬라이드 번호 */}
+        <div className={styles.slideCount}>{cur + 1} / {SLIDES.length}</div>
+
+        {/* 진행 바 */}
+        <div className={styles.progressTrack}>
+          <div
+            className={styles.progressBar}
+            style={{ background: slide.accent }}
+            key={cur}
+          />
+        </div>
+
+        {/* 콘텐츠 */}
+        <div className={styles.slideContent}>
+          <div className={styles.slideLeft}>
+            <span className={styles.slideTag} style={{ color: slide.accent, borderColor: slide.accent + '40' }}>
+              {slide.emoji} {slide.tag}
+            </span>
+            <h2 className={styles.slideTitle}>
+              {slide.title.split('\n').map((line, i) => (
+                <span key={i}>{line}{i < slide.title.split('\n').length - 1 && <br/>}</span>
+              ))}
+            </h2>
+            <p className={styles.slideDesc}>
+              {slide.desc.split('\n').map((line, i) => (
+                <span key={i}>{line}{i < slide.desc.split('\n').length - 1 && <br/>}</span>
+              ))}
+            </p>
+            <div className={styles.slideCta}>
+              <Link href="/missions" className={styles.slideBtn} style={{ background: slide.accent, color: '#0a1a12' }}>
+                미션 수행하기 →
+              </Link>
+            </div>
+          </div>
+          <div className={styles.slideRight}>
+            <div className={styles.slideEmoji} style={{ borderColor: slide.accent + '30', background: slide.accent + '10' }}>
+              {slide.emoji}
+            </div>
+          </div>
+        </div>
+
+        {/* 도트 네비 */}
+        <div className={styles.dots}>
+          {SLIDES.map((_, i) => (
+            <button
+              key={i}
+              className={`${styles.dot} ${i === cur ? styles.dotActive : ''}`}
+              style={i === cur ? { background: slide.accent } : {}}
+              onClick={() => goTo(i)}
+              aria-label={`슬라이드 ${i + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ── 메인 컴포넌트 ── */
 export default function Dashboard() {
   const { user } = useAuth()
   const { missions }    = useMyMissions(user?.id)
@@ -99,10 +234,13 @@ export default function Dashboard() {
         </div>
       </div>
 
+      {/* 시네마틱 슬라이더 */}
+      <CinematicSlider />
+
       {/* ── 2열 하단 레이아웃 ── */}
       <div className={styles.cols}>
 
-        {/* 왼쪽: 내가 올린 미션 */}
+        {/* 내가 올린 미션 */}
         <div className={`${styles.section} ${styles.colMain} reveal`}>
           <div className={styles.sectionHead}>
             <h2 className={styles.sectionTitle}>📌 내가 올린 미션</h2>
@@ -140,8 +278,6 @@ export default function Dashboard() {
 
         {/* 오른쪽: 최근 활동 + 포인트 안내 */}
         <div className={styles.colSide}>
-
-          {/* 최근 인증 */}
           <div className={`${styles.section} reveal`}>
             <div className={styles.sectionHead}>
               <h2 className={styles.sectionTitle}>🕐 최근 활동 내역</h2>
@@ -166,7 +302,6 @@ export default function Dashboard() {
             )}
           </div>
 
-          {/* 포인트 안내 */}
           <div className={`${styles.section} reveal`}>
             <div className={styles.pointGuide}>
               <h3 className={styles.guideTitle}>⭐ 포인트 안내</h3>
@@ -184,7 +319,6 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-/* ── Dashboard — 전체 너비 + 2열 레이아웃 + 모바일 최적화 ── */
+/* ── Dashboard — 전체 너비 + 시네마틱 슬라이더 ── */
 .page {
   width: 100%;
   padding: var(--s8) var(--s8) var(--s16);
@@ -125,6 +125,171 @@
 .statNum   { font-size: 32px; font-weight: 700; color: var(--text-main); font-family: var(--font-display); line-height: 1; }
 .statLabel { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
 
+/* ════════════════════════════
+   시네마틱 슬라이더
+════════════════════════════ */
+.slider {
+  margin-bottom: var(--s8);
+  border-radius: var(--r6);
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+  position: relative;
+}
+
+.slide {
+  position: relative;
+  min-height: 280px;
+  padding: 48px 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  overflow: hidden;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.slideOut {
+  opacity: 0;
+  transform: scale(0.98);
+}
+.slideIn {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* 배경 격자 */
+.slideGrid {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* 슬라이드 번호 */
+.slideCount {
+  position: absolute;
+  top: 20px; right: 24px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  z-index: 2;
+}
+
+/* 진행 바 */
+.progressTrack {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  z-index: 10;
+}
+.progressBar {
+  height: 100%;
+  width: 0%;
+  border-radius: 99px;
+  animation: slideProgress 5s linear forwards;
+}
+@keyframes slideProgress {
+  from { width: 0% }
+  to   { width: 100% }
+}
+
+/* 슬라이드 콘텐츠 */
+.slideContent {
+  position: relative; z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex: 1;
+}
+.slideLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+.slideTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 99px;
+  border: 1px solid;
+  width: fit-content;
+  letter-spacing: 0.04em;
+}
+.slideTitle {
+  font-size: 38px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+}
+.slideDesc {
+  font-size: 16px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.7;
+}
+.slideCta { margin-top: 8px; }
+.slideBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 99px;
+  text-decoration: none;
+  transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.slideBtn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
+
+.slideRight {
+  flex-shrink: 0;
+}
+.slideEmoji {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 2px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 72px;
+  line-height: 1;
+}
+
+/* 도트 네비 */
+.dots {
+  position: relative; z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding-bottom: 20px;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  background: rgba(255,255,255,0.25);
+  transition: all 0.3s;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+.dotActive {
+  width: 24px;
+  border-radius: 99px;
+}
+
 /* ════════ 2열 레이아웃 ════════ */
 .cols {
   display: grid;
@@ -195,7 +360,7 @@
 /* ════════ 포인트 안내 ════════ */
 .pointGuide {
   background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--r4); padding: var(--s6) var(--s6);
+  border-radius: var(--r4); padding: var(--s6);
 }
 .guideTitle  { font-size: 17px; font-weight: 700; color: var(--text-main); margin-bottom: var(--s4); }
 .guideGrid   { display: flex; flex-direction: column; }
@@ -212,10 +377,13 @@
   .cols { grid-template-columns: 1fr 340px; }
 }
 @media (max-width: 960px) {
-  .statGrid { grid-template-columns: repeat(2, 1fr); }
-  .cols     { grid-template-columns: 1fr; }
-  .colSide  { flex-direction: row; gap: var(--s4); }
+  .statGrid  { grid-template-columns: repeat(2, 1fr); }
+  .cols      { grid-template-columns: 1fr; }
+  .colSide   { flex-direction: row; gap: var(--s4); }
   .colSide .section { flex: 1; margin-bottom: 0; }
+  .slide     { padding: 36px 40px; min-height: 240px; }
+  .slideTitle { font-size: 30px; }
+  .slideEmoji { width: 110px; height: 110px; font-size: 56px; }
 }
 @media (max-width: 640px) {
   .page       { padding: var(--s5) var(--s4) var(--s12); }
@@ -235,4 +403,11 @@
   .missionRow { flex-wrap: wrap; gap: var(--s2); }
   .missionProgress { min-width: auto; }
   .sectionTitle { font-size: 18px; }
+  /* 슬라이더 모바일 */
+  .slide      { padding: 28px 24px; min-height: 220px; }
+  .slideTitle { font-size: 24px; }
+  .slideDesc  { font-size: 14px; }
+  .slideEmoji { width: 80px; height: 80px; font-size: 40px; }
+  .slideBtn   { font-size: 14px; padding: 10px 20px; }
+  .slideTag   { font-size: 12px; }
 }

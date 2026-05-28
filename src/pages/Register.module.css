@@ -1,7 +1,6 @@
 /* ── Register — 변수 전면 교체 + 모바일 최적화 ── */
 .wrap {
-  max-width: 640px;
-  margin: 0 auto;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -53,6 +52,7 @@
   flex-direction: column;
   gap: 28px;
   box-shadow: var(--shadow-sm);
+  max-width: 960px;
 }
 
 /* 섹션 */
@@ -87,6 +87,7 @@
 .typeGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  max-width: 960px;
   gap: 12px;
 }
 .typeCard {
