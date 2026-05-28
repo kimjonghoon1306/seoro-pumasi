@@ -416,7 +416,7 @@
    라이트 모드 — 사이드바 + 모바일바 전환
 ════════════════════════════════════════ */
 [data-theme="light"] .sidebar {
-  background: #fff;
+  background: var(--bg-card);
   border-right: 1px solid var(--border);
   box-shadow: 2px 0 16px rgba(0,0,0,0.06);
 }
@@ -480,7 +480,7 @@
 
 /* 모바일 상단바 라이트 */
 [data-theme="light"] .mobileTopBar {
-  background: #fff;
+  background: var(--bg-card);
   border-bottom-color: var(--border);
   box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
@@ -496,7 +496,7 @@
 
 /* 모바일 하단 탭바 라이트 */
 [data-theme="light"] .mobileTabBar {
-  background: #fff;
+  background: var(--bg-card);
   border-top-color: var(--border);
   box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
 }

@@ -19,13 +19,13 @@ function formatDate(d: string) {
 
 export default function Dashboard() {
   const { user } = useAuth()
-  const { missions } = useMyMissions(user?.id)
+  const { missions }    = useMyMissions(user?.id)
   const { completions } = useMyCompletions(user?.id)
 
   if (!user) return null
   const currentUser = user
 
-  const grade        = getGrade(currentUser.points)
+  const grade          = getGrade(currentUser.points)
   const activeMissions = missions.filter((m: Mission) => m.status === 'active')
   const doneMissions   = missions.filter((m: Mission) => m.status === 'done')
   const approvedCount  = completions.filter((c: Completion) => c.status === 'approved').length
@@ -85,8 +85,8 @@ export default function Dashboard() {
         </div>
         <div className={`${styles.statGrid} animate-fadeUp delay-200`}>
           {[
-            { emoji: '✅', num: approvedCount, label: '완료한 미션', accent: 'var(--g500)' },
-            { emoji: '⏳', num: pendingCount,  label: '승인 대기 중', accent: 'var(--gold)' },
+            { emoji: '✅', num: approvedCount,        label: '완료한 미션',    accent: 'var(--g500)' },
+            { emoji: '⏳', num: pendingCount,          label: '승인 대기 중',   accent: 'var(--gold)' },
             { emoji: '📌', num: activeMissions.length, label: '내가 올린 미션', accent: 'var(--pink)' },
             { emoji: '🎉', num: doneMissions.length,   label: '완료된 내 미션', accent: 'var(--g400)' },
           ].map((s, i) => (
@@ -99,83 +99,92 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* 내가 올린 미션 */}
-      <div className={`${styles.section} reveal`}>
-        <div className={styles.sectionHead}>
-          <h2 className={styles.sectionTitle}>📌 내가 올린 미션</h2>
-          <Link href="/register" className={styles.sectionMore}>+ 새 미션 올리기</Link>
-        </div>
-        {missions.length === 0 ? (
-          <div className={styles.empty}>
-            <span className={styles.emptyEmoji}>🙈</span>
-            <p>아직 올린 미션이 없어요</p>
-            <Link href="/register" className={styles.emptyBtn}>✏️ 미션 올리러 가기</Link>
+      {/* ── 2열 하단 레이아웃 ── */}
+      <div className={styles.cols}>
+
+        {/* 왼쪽: 내가 올린 미션 */}
+        <div className={`${styles.section} ${styles.colMain} reveal`}>
+          <div className={styles.sectionHead}>
+            <h2 className={styles.sectionTitle}>📌 내가 올린 미션</h2>
+            <Link href="/register" className={styles.sectionMore}>+ 새 미션 올리기</Link>
           </div>
-        ) : (
-          <div className={styles.missionList}>
-            {missions.slice(0, 5).map((m: Mission) => (
-              <div key={m.id} className={styles.missionRow}>
-                <span className={styles.missionEmoji}>{MISSION_EMOJI[m.type as MissionType]}</span>
-                <div className={styles.missionInfo}>
-                  <span className={styles.missionType}>{MISSION_LABELS[m.type as MissionType]}</span>
-                  <span className={styles.missionDate}>{formatDate(m.created_at)}</span>
-                </div>
-                <div className={styles.missionProgress}>
-                  <span className={styles.progressText}>{m.done_count} / {m.total_count}</span>
-                  <div className={styles.progressBar}>
-                    <div className={styles.progressFill} style={{ width: `${(m.done_count/m.total_count)*100}%` }}/>
+          {missions.length === 0 ? (
+            <div className={styles.empty}>
+              <span className={styles.emptyEmoji}>🙈</span>
+              <p>아직 올린 미션이 없어요</p>
+              <Link href="/register" className={styles.emptyBtn}>✏️ 미션 올리러 가기</Link>
+            </div>
+          ) : (
+            <div className={styles.missionList}>
+              {missions.slice(0, 5).map((m: Mission) => (
+                <div key={m.id} className={styles.missionRow}>
+                  <span className={styles.missionEmoji}>{MISSION_EMOJI[m.type as MissionType]}</span>
+                  <div className={styles.missionInfo}>
+                    <span className={styles.missionType}>{MISSION_LABELS[m.type as MissionType]}</span>
+                    <span className={styles.missionDate}>{formatDate(m.created_at)}</span>
                   </div>
+                  <div className={styles.missionProgress}>
+                    <span className={styles.progressText}>{m.done_count} / {m.total_count}</span>
+                    <div className={styles.progressBar}>
+                      <div className={styles.progressFill} style={{ width: `${(m.done_count/m.total_count)*100}%` }}/>
+                    </div>
+                  </div>
+                  <span className={`${styles.statusBadge} ${m.status==='active'?styles.sbActive:styles.sbDone}`}>
+                    {m.status==='active'?'진행 중':'완료'}
+                  </span>
                 </div>
-                <span className={`${styles.statusBadge} ${m.status==='active'?styles.sbActive:styles.sbDone}`}>
-                  {m.status==='active'?'진행 중':'완료'}
-                </span>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* 최근 인증 */}
-      <div className={`${styles.section} reveal`}>
-        <div className={styles.sectionHead}>
-          <h2 className={styles.sectionTitle}>🕐 최근 활동 내역</h2>
+              ))}
+            </div>
+          )}
         </div>
-        {completions.length === 0 ? (
-          <div className={styles.empty}>
-            <span className={styles.emptyEmoji}>👀</span>
-            <p>아직 활동 내역이 없어요</p>
-            <Link href="/missions" className={styles.emptyBtn}>📋 미션 수행하러 가기</Link>
-          </div>
-        ) : (
-          <div className={styles.recentList}>
-            {completions.map((c: Completion) => (
-              <div key={c.id} className={styles.recentRow}>
-                <span className={`${styles[c.status==='approved'?'rsApproved':c.status==='rejected'?'rsRejected':'rsPending']}`}>
-                  {c.status==='approved'?'✅ 승인됨':c.status==='rejected'?'❌ 반려됨':'⏳ 확인 중'}
-                </span>
-                <span className={styles.recentDate}>{formatDate(c.created_at)}</span>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
 
-      {/* 포인트 안내 */}
-      <div className={`${styles.section} reveal`}>
-        <div className={styles.pointGuide}>
-          <h3 className={styles.guideTitle}>⭐ 포인트 안내</h3>
-          <div className={styles.guideGrid}>
-            {[
-              { icon: '🤝', label: '서로이웃 추가해주면', pt: '+10P' },
-              { icon: '💛', label: '공감 눌러주면', pt: '+3P' },
-              { icon: '💬', label: '댓글 달아주면', pt: '+5P' },
-            ].map((g, i) => (
-              <div key={i} className={styles.guideItem}>
-                <span>{g.icon} {g.label}</span>
-                <strong>{g.pt}</strong>
+        {/* 오른쪽: 최근 활동 + 포인트 안내 */}
+        <div className={styles.colSide}>
+
+          {/* 최근 인증 */}
+          <div className={`${styles.section} reveal`}>
+            <div className={styles.sectionHead}>
+              <h2 className={styles.sectionTitle}>🕐 최근 활동 내역</h2>
+            </div>
+            {completions.length === 0 ? (
+              <div className={styles.empty}>
+                <span className={styles.emptyEmoji}>👀</span>
+                <p>아직 활동 내역이 없어요</p>
+                <Link href="/missions" className={styles.emptyBtn}>📋 미션 수행하러 가기</Link>
               </div>
-            ))}
+            ) : (
+              <div className={styles.recentList}>
+                {completions.map((c: Completion) => (
+                  <div key={c.id} className={styles.recentRow}>
+                    <span className={`${styles[c.status==='approved'?'rsApproved':c.status==='rejected'?'rsRejected':'rsPending']}`}>
+                      {c.status==='approved'?'✅ 승인됨':c.status==='rejected'?'❌ 반려됨':'⏳ 확인 중'}
+                    </span>
+                    <span className={styles.recentDate}>{formatDate(c.created_at)}</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
+
+          {/* 포인트 안내 */}
+          <div className={`${styles.section} reveal`}>
+            <div className={styles.pointGuide}>
+              <h3 className={styles.guideTitle}>⭐ 포인트 안내</h3>
+              <div className={styles.guideGrid}>
+                {[
+                  { icon: '🤝', label: '서로이웃 추가해주면', pt: '+10P' },
+                  { icon: '💛', label: '공감 눌러주면',       pt: '+3P'  },
+                  { icon: '💬', label: '댓글 달아주면',       pt: '+5P'  },
+                ].map((g, i) => (
+                  <div key={i} className={styles.guideItem}>
+                    <span>{g.icon} {g.label}</span>
+                    <strong>{g.pt}</strong>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
