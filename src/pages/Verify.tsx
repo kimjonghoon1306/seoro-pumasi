@@ -85,12 +85,7 @@ export default function Verify() {
         .eq('id', mission.id)
       if (missionErr) throw missionErr
 
-      // 5. 수행자 포인트 적립 (pending → 관리자 승인 후 지급 방식으로 변경 가능)
-      const { error: pointErr } = await supabase
-        .from('users')
-        .update({ points: user.points + mission.points })
-        .eq('id', user.id)
-      if (pointErr) throw pointErr
+      // 포인트는 관리자 승인 시 지급 (Admin.tsx approve()에서 처리)
 
       setDone(true)
     } catch (err: unknown) {
@@ -111,8 +106,8 @@ export default function Verify() {
       <div className={styles.doneEmoji}>🎉</div>
       <h2 className={styles.doneTitle}>인증 완료!</h2>
       <p className={styles.doneDesc}>
-        포인트가 적립됐어요!<br />
-        관리자 확인 후 최종 승인돼요 😊
+        인증이 접수됐어요!<br />
+        관리자 확인 후 승인되면 포인트가 지급돼요 😊
       </p>
       <div className={styles.doneBtns}>
         <button className={styles.doneBtn} onClick={() => setLocation('/missions')}>
