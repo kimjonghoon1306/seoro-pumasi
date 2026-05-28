@@ -52,7 +52,6 @@
   flex-direction: column;
   gap: 28px;
   box-shadow: var(--shadow-sm);
-  max-width: 960px;
 }
 
 /* 섹션 */
@@ -87,7 +86,6 @@
 .typeGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  max-width: 960px;
   gap: 12px;
 }
 .typeCard {
