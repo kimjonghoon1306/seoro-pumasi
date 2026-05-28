@@ -27,3 +27,14 @@
   .footer { padding: var(--s8) var(--s5); }
   .footerInner { flex-direction: column; gap: var(--s4); text-align: center; }
 }
+
+/* ════════════════════════
+   라이트 모드 푸터 전환
+════════════════════════ */
+[data-theme="light"] .footer {
+  background: var(--bg-card);
+  border-top-color: var(--border);
+}
+[data-theme="light"] .footerLogoText { color: var(--g500); }
+[data-theme="light"] .footerTagline  { color: var(--text-muted); }
+[data-theme="light"] .footerCopy     { color: var(--text-muted); }

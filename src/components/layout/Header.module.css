@@ -334,3 +334,110 @@
   background: rgba(255,255,255,0.08);
   transform: rotate(90deg);
 }
+
+/* ════════════════════════════════
+   라이트 모드 헤더 전환
+════════════════════════════════ */
+[data-theme="light"] .header {
+  background: #fff;
+  box-shadow: 0 1px 0 var(--border);
+}
+[data-theme="light"] .header.scrolled {
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  box-shadow: 0 1px 0 var(--border), 0 4px 24px rgba(0,0,0,0.08);
+}
+
+/* 로고 */
+[data-theme="light"] .logoName   { color: var(--g800); }
+[data-theme="light"] .logoDomain { color: var(--text-muted); }
+
+/* 네비 */
+[data-theme="light"] .navItem {
+  color: var(--text-sub);
+}
+[data-theme="light"] .navItem:hover {
+  color: var(--g600);
+  background: var(--bg-subtle);
+}
+[data-theme="light"] .navItem.active {
+  color: var(--g500);
+  background: rgba(34,160,90,0.08);
+}
+[data-theme="light"] .navItem.active::after {
+  background: var(--g500);
+}
+
+/* 우측 영역 */
+[data-theme="light"] .avatarBtn {
+  background: var(--bg-subtle);
+  border-color: var(--border);
+}
+[data-theme="light"] .avatarBtn:hover { background: var(--border); }
+[data-theme="light"] .nickname    { color: var(--text-sub); }
+[data-theme="light"] .logoutBtn   { color: var(--text-muted); }
+[data-theme="light"] .logoutBtn:hover { color: var(--pink); background: var(--pink-light); }
+[data-theme="light"] .loginBtn:hover  { background: var(--g050); }
+
+/* 포인트 필 */
+[data-theme="light"] .pointPill {
+  background: var(--gold-light);
+  border-color: rgba(245,200,66,0.4);
+}
+[data-theme="light"] .pointPill:hover {
+  background: rgba(245,200,66,0.3);
+}
+
+/* 관리자 기어 */
+[data-theme="light"] .gearBtn { color: var(--text-muted); }
+[data-theme="light"] .gearBtn:hover {
+  background: var(--bg-subtle);
+  color: var(--text-sub);
+}
+
+/* 테마바 */
+[data-theme="light"] .themeBar {
+  background: var(--bg-subtle);
+  border-bottom-color: var(--border);
+}
+[data-theme="light"] .themeLabel { color: var(--text-sub); }
+[data-theme="light"] .sizeBtns   { background: var(--border); }
+[data-theme="light"] .sizeBtn    { color: var(--text-sub); }
+[data-theme="light"] .darkBtn {
+  color: var(--text-sub);
+  border-color: var(--border-mid);
+}
+[data-theme="light"] .darkBtn:hover {
+  background: var(--bg-subtle);
+  color: var(--text-main);
+}
+
+/* 모바일 햄버거 */
+[data-theme="light"] .menuLine { background: var(--g700); }
+
+/* 모바일 드로어 */
+[data-theme="light"] .drawerPanel {
+  background: #fff;
+  border-left: 1px solid var(--border);
+  box-shadow: -8px 0 48px rgba(0,0,0,0.12);
+}
+[data-theme="light"] .drawerNavItem {
+  color: var(--text-sub);
+}
+[data-theme="light"] .drawerNavItem:hover {
+  background: var(--bg-subtle);
+  color: var(--text-main);
+}
+[data-theme="light"] .drawerNavItem.active {
+  color: var(--g500);
+  background: rgba(34,160,90,0.08);
+}
+
+/* 모바일 테마바 (900px 이하) */
+@media (max-width: 900px) {
+  [data-theme="light"] .themeBar {
+    background: var(--bg-subtle) !important;
+    border-bottom-color: var(--border);
+  }
+}
