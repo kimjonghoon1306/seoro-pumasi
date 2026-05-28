@@ -40,18 +40,50 @@
   min-width: 0;
 }
 .nickname { font-size: 24px; font-weight: 700; }
-.email    { font-size: 16px; color: rgba(255,255,255,0.75); letter-spacing: 0.01em; }
-.blogUrl  {
-  font-size: 16px;
-  color: var(--gold);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  word-break: break-all;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+
+/* 정보 배지 */
+.infoBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+.infoBadge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: var(--r-full);
+  padding: 8px 18px;
+  text-decoration: none;
+  transition: background 0.15s;
+  cursor: default;
+}
+a.infoBadge { cursor: pointer; }
+a.infoBadge:hover { background: rgba(255,255,255,0.18); }
+.badgeIcon  { font-size: 18px; line-height: 1; flex-shrink: 0; }
+.badgeLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.badgeValue {
+  font-size: 15px;
+  color: rgba(255,255,255,0.9);
   font-weight: 500;
 }
+.badgeBlog {
+  font-size: 15px;
+  color: var(--gold);
+  font-weight: 600;
+}
+/* 하위 호환 */
+.email   { display: none; }
+.blogUrl { display: none; }
 
 .pointBox {
   background: rgba(255,255,255,0.12);

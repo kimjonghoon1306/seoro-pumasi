@@ -56,10 +56,19 @@ export default function MyPage() {
         <div className={styles.avatar}>{currentUser.nickname[0]}</div>
         <div className={styles.infoDetail}>
           <h2 className={styles.nickname}>{currentUser.nickname}님</h2>
-          <p className={styles.email}>📧 {currentUser.email}</p>
-          <a href={currentUser.blog_url} target="_blank" rel="noreferrer" className={styles.blogUrl}>
-            📝 {currentUser.blog_url}
-          </a>
+          <div className={styles.infoBadges}>
+            <div className={styles.infoBadge}>
+              <span className={styles.badgeIcon}>📧</span>
+              <span className={styles.badgeLabel}>이메일</span>
+              <span className={styles.badgeValue}>{currentUser.email}</span>
+            </div>
+            <a href={currentUser.blog_url} target="_blank" rel="noreferrer"
+              className={styles.infoBadge}>
+              <span className={styles.badgeIcon}>📝</span>
+              <span className={styles.badgeLabel}>블로그</span>
+              <span className={styles.badgeBlog}>내 블로그 바로가기 →</span>
+            </a>
+          </div>
         </div>
         <div className={styles.pointBox}>
           <span className={styles.pointNum}>{currentUser.points.toLocaleString()}</span>
