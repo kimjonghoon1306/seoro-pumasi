@@ -60,6 +60,7 @@
   font-style: italic;
 }
 .logoDomain { font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.05em; }
+.logoBr { display: none; }
 
 /* 네비 */
 .nav {
@@ -321,7 +322,15 @@
 
 @media (max-width: 480px) {
   .logoDomain { display: none; }
-  .pointPill span:not(:first-child) { display: none; }
+  /* 서로품앗이 두 줄로 → 로고 폭 절반으로 줄어 우측 공간 확보 */
+  .logoBr { display: inline; }
+  .logoName { font-size: 13px; line-height: 1.15; }
+  /* 헤더 우측 overflow 방지 — 포인트/아바타는 드로어에서 확인 */
+  .right .pointPill { display: none; }
+  .right .avatarBtn { display: none; }
+  /* 로그아웃 이모지 전용 스타일 */
+  .logoutBtn { font-size: 17px; padding: 4px 6px; }
+  .right { gap: var(--s2); }
 }
 
 /* 관리자 톱니바퀴 */
