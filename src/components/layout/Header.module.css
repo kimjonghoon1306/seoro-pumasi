@@ -312,3 +312,22 @@
   .logoDomain { display: none; }
   .pointPill span:not(:first-child) { display: none; }
 }
+
+/* 관리자 톱니바퀴 */
+.gearBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: rgba(255,255,255,0.25);
+  transition: color var(--dur-mid), background var(--dur-mid), transform var(--dur-slow) var(--ease-out);
+  flex-shrink: 0;
+}
+.gearBtn svg { width: 16px; height: 16px; }
+.gearBtn:hover {
+  color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.08);
+  transform: rotate(90deg);
+}
