@@ -461,3 +461,76 @@
   .howToBtnTitle { font-size: 16px; }
   .howToBtnDesc  { font-size: 13px; }
 }
+
+/* ════════ 플로팅 사용방법 버튼 ════════ */
+.floatBtn {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, var(--g400) 0%, var(--g600) 100%);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 14px 20px;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(34,160,90,0.45), 0 0 0 0 rgba(34,160,90,0.4);
+  animation: floatBounce 2.5s ease-in-out infinite, floatPulse 2.5s ease-in-out infinite;
+  transition: transform 0.15s, box-shadow 0.15s;
+  min-width: 80px;
+}
+.floatBtn:hover {
+  animation: none;
+  transform: translateY(-4px) scale(1.06);
+  box-shadow: 0 12px 40px rgba(34,160,90,0.55);
+}
+.floatBtnEmoji {
+  font-size: 28px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+.floatBtnLabel {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+@keyframes floatBounce {
+  0%, 100% { transform: translateY(0px); }
+  30%       { transform: translateY(-10px); }
+  60%       { transform: translateY(-4px); }
+  80%       { transform: translateY(-8px); }
+}
+@keyframes floatPulse {
+  0%, 100% { box-shadow: 0 8px 32px rgba(34,160,90,0.45), 0 0 0 0 rgba(34,160,90,0.4); }
+  50%       { box-shadow: 0 8px 32px rgba(34,160,90,0.45), 0 0 0 12px rgba(34,160,90,0); }
+}
+
+@media (max-width: 640px) {
+  .floatBtn {
+    bottom: max(20px, calc(env(safe-area-inset-bottom) + 16px));
+    right: 16px;
+    padding: 14px 18px;
+    border-radius: 18px;
+    min-width: 76px;
+    box-shadow: 0 6px 24px rgba(34,160,90,0.5), 0 0 0 0 rgba(34,160,90,0.4);
+  }
+  .floatBtnEmoji { font-size: 28px; }
+  .floatBtnLabel { font-size: 13px; }
+}
+/* 아주 작은 화면 */
+@media (max-width: 380px) {
+  .floatBtn {
+    bottom: max(16px, calc(env(safe-area-inset-bottom) + 12px));
+    right: 12px;
+    padding: 12px 14px;
+    min-width: 68px;
+  }
+  .floatBtnEmoji { font-size: 26px; }
+  .floatBtnLabel { font-size: 11px; }
+}

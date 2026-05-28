@@ -5,6 +5,7 @@ import { MISSION_EMOJI, MISSION_LABELS } from '../types'
 import type { Mission, Completion, MissionType } from '../types'
 import { useState, useEffect } from 'react'
 import styles from './Dashboard.module.css'
+import HowToModal from './HowToModal'
 
 function getGrade(p: number) {
   if (p >= 1000) return { label: '🌳 숲',  desc: '최고 등급!' }
@@ -153,6 +154,7 @@ function CinematicSlider() {
 
 /* ── 메인 컴포넌트 ── */
 export default function Dashboard() {
+  const [howToOpen, setHowToOpen] = useState(false)
   const { user } = useAuth()
   const { missions }    = useMyMissions(user?.id)
   const { completions } = useMyCompletions(user?.id)
@@ -167,6 +169,7 @@ export default function Dashboard() {
   const pendingCount   = completions.filter((c: Completion) => c.status === 'pending').length
 
   return (
+    <>
     <div className={styles.page}>
 
       {/* 배너 */}
@@ -234,8 +237,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* 시네마틱 슬라이더 */}
-      <CinematicSlider />
 
       {/* ── 2열 하단 레이아웃 ── */}
       <div className={styles.cols}>
@@ -322,5 +323,13 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
+      {/* 플로팅 사용방법 버튼 */}
+      <button className={styles.floatBtn} onClick={() => setHowToOpen(true)} aria-label="사용방법">
+        <span className={styles.floatBtnEmoji}>📖</span>
+        <span className={styles.floatBtnLabel}>사용방법</span>
+      </button>
+
+      {howToOpen && <HowToModal onClose={() => setHowToOpen(false)} />}
+    </>
   )
 }
