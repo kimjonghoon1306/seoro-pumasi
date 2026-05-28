@@ -265,3 +265,41 @@
   .blogUrl { font-size: 16px; }
   .pointBadge { font-size: 16px; }
 }
+
+/* ════════ 중복 방지 UI ════════ */
+.cardDone {
+  opacity: 0.72;
+  position: relative;
+}
+.cardDone:hover {
+  transform: none !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+.doneBadge {
+  position: absolute;
+  top: 14px; right: 14px;
+  background: rgba(34,160,90,0.12);
+  color: var(--g500);
+  border: 1px solid rgba(34,160,90,0.25);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 99px;
+  z-index: 1;
+}
+.doneBtn {
+  width: 100%;
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 16px;
+  border-radius: var(--r3);
+  text-align: center;
+  border: 1.5px dashed var(--border);
+  cursor: not-allowed;
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

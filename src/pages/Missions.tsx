@@ -10,23 +10,39 @@ type Filter = 'all' | MissionType
 
 export default function Missions() {
   const { user } = useAuth()
-  const [missions, setMissions] = useState<Mission[]>([])
-  const [loading, setLoading] = useState(true)
-  const [filter, setFilter] = useState<Filter>('all')
+  const [missions,   setMissions]   = useState<Mission[]>([])
+  const [doneIds,    setDoneIds]    = useState<Set<string>>(new Set())
+  const [loading,    setLoading]    = useState(true)
+  const [filter,     setFilter]     = useState<Filter>('all')
 
   useEffect(() => {
     async function load() {
       try {
-        const { data } = await supabase
+        // 미션 목록
+        const { data: missionData } = await supabase
           .from('missions')
           .select('*')
           .eq('status', 'active')
           .order('created_at', { ascending: false })
-        // 내 미션 제외 (어뷰징 방지)
-        const filtered = (data as Mission[] || []).filter(
+
+        const filtered = (missionData as Mission[] || []).filter(
           (m: Mission) => m.owner_id !== user?.id
         )
         setMissions(filtered)
+
+        // 내가 이미 제출한 미션 ID 목록 (pending + approved 둘 다)
+        if (user?.id) {
+          const { data: completionData } = await supabase
+            .from('completions')
+            .select('mission_id')
+            .eq('user_id', user.id)
+            .in('status', ['pending', 'approved'])
+
+          const ids = new Set(
+            (completionData || []).map((c: { mission_id: string }) => c.mission_id)
+          )
+          setDoneIds(ids)
+        }
       } catch {
         setMissions([])
       } finally {
@@ -57,7 +73,7 @@ export default function Missions() {
         </Link>
       </div>
 
-      {/* 어떻게 하나요 안내 */}
+      {/* 어떻게 하나요 */}
       <div className={styles.howTo}>
         <div className={styles.howStep}>
           <span className={styles.howNum}>1</span>
@@ -75,13 +91,13 @@ export default function Missions() {
         </div>
       </div>
 
-      {/* 필터 탭 */}
+      {/* 필터 */}
       <div className={styles.filters}>
         {([
-          { key: 'all',      label: '전체 보기',      emoji: '📋' },
-          { key: 'neighbor', label: '서로이웃 추가',  emoji: '🤝' },
-          { key: 'like',     label: '공감 누르기',    emoji: '💛' },
-          { key: 'comment',  label: '댓글 달기',      emoji: '💬' },
+          { key: 'all',      label: '전체 보기',     emoji: '📋' },
+          { key: 'neighbor', label: '서로이웃 추가', emoji: '🤝' },
+          { key: 'like',     label: '공감 누르기',   emoji: '💛' },
+          { key: 'comment',  label: '댓글 달기',     emoji: '💬' },
         ] as { key: Filter; label: string; emoji: string }[]).map(f => (
           <button
             key={f.key}
@@ -93,7 +109,7 @@ export default function Missions() {
         ))}
       </div>
 
-      {/* 미션 카드 목록 */}
+      {/* 목록 */}
       {loading ? (
         <div className={styles.loading}>
           <span className={styles.loadingEmoji}>⏳</span>
@@ -108,32 +124,32 @@ export default function Missions() {
       ) : (
         <div className={styles.cardGrid}>
           {displayed.map((m: Mission) => (
-            <MissionCard key={m.id} mission={m} />
+            <MissionCard key={m.id} mission={m} isDone={doneIds.has(m.id)} />
           ))}
         </div>
       )}
-
     </div>
   )
 }
 
-function MissionCard({ mission: m }: { mission: Mission }) {
+function MissionCard({ mission: m, isDone }: { mission: Mission; isDone: boolean }) {
   const remaining = m.total_count - m.done_count
 
   return (
-    <div className={styles.card}>
+    <div className={`${styles.card} ${isDone ? styles.cardDone : ''}`}>
+
+      {/* 완료 오버레이 뱃지 */}
+      {isDone && (
+        <div className={styles.doneBadge}>✅ 이미 완료했어요</div>
+      )}
+
       {/* 미션 종류 배지 */}
       <div className={`${styles.typeBadge} ${styles['type_' + m.type]}`}>
         {MISSION_EMOJI[m.type as MissionType]} {MISSION_LABELS[m.type as MissionType]}
       </div>
 
       {/* 블로그 주소 */}
-      <a
-        href={m.blog_url}
-        target="_blank"
-        rel="noreferrer"
-        className={styles.blogUrl}
-      >
+      <a href={m.blog_url} target="_blank" rel="noreferrer" className={styles.blogUrl}>
         🔗 {m.blog_url}
       </a>
 
@@ -150,10 +166,16 @@ function MissionCard({ mission: m }: { mission: Mission }) {
         <span className={styles.remaining}>남은 수량 {remaining}개</span>
       </div>
 
-      {/* 인증하기 버튼 */}
-      <Link href={`/verify/${m.id}`} className={styles.doBtn}>
-        ✅ 활동하고 인증하기
-      </Link>
+      {/* 인증 버튼 — 완료 시 비활성화 */}
+      {isDone ? (
+        <div className={styles.doneBtn}>
+          ✅ 이미 인증했어요
+        </div>
+      ) : (
+        <Link href={`/verify/${m.id}`} className={styles.doBtn}>
+          ✅ 활동하고 인증하기
+        </Link>
+      )}
     </div>
   )
 }
