@@ -134,3 +134,68 @@ input,textarea,select{font-family:inherit;}
 
 @media(max-width:768px){html{font-size:16px;}}
 @media(max-width:480px){html{font-size:15px;}}
+
+/* ════════════════════════════════════════
+   뒤로가기 버튼 (글로벌)
+════════════════════════════════════════ */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 9999px;
+  padding: 7px 16px;
+  text-decoration: none;
+  margin-bottom: 20px;
+  transition: color 0.15s, background 0.15s, transform 0.15s;
+  width: fit-content;
+}
+.back-btn:hover { color: #fff; background: rgba(255,255,255,0.12); }
+.back-btn:active { transform: scale(0.96); }
+[data-theme="light"] .back-btn {
+  color: var(--text-sub);
+  background: var(--bg-subtle);
+  border-color: var(--border);
+}
+[data-theme="light"] .back-btn:hover { background: var(--border); color: var(--text-main); }
+
+/* ════════════════════════════════════════
+   반짝 카드 (글로벌) — 클릭 가능 요소에 적용
+════════════════════════════════════════ */
+.card-shine {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1),
+              box-shadow 0.15s ease;
+}
+/* 반질반질 광택 스윕 */
+.card-shine::after {
+  content: '';
+  position: absolute;
+  top: -60%;
+  left: -80%;
+  width: 45%;
+  height: 220%;
+  background: linear-gradient(
+    105deg,
+    rgba(255,255,255,0)    0%,
+    rgba(255,255,255,0.22) 50%,
+    rgba(255,255,255,0)    100%
+  );
+  transform: skewX(-18deg);
+  animation: shineSweep 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes shineSweep {
+  0%       { left: -80%; opacity: 1; }
+  35%, 100% { left: 130%; opacity: 0; }
+}
+/* 터치 시 툭 튀어나오기 */
+.card-shine:active {
+  transform: scale(1.045) translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+}
