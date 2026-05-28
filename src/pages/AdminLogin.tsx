@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'wouter'
 import { supabase } from '../lib/supabase'
+import { useTheme } from '../lib/theme'
 import styles from './AdminLogin.module.css'
 
 const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL || 's9653@naver.com'
@@ -11,6 +12,7 @@ export default function AdminLogin() {
   const [error, setError]       = useState('')
   const [loading, setLoading]   = useState(false)
   const [, setLocation]         = useLocation()
+  const { theme, toggleTheme }  = useTheme()
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -21,10 +23,7 @@ export default function AdminLogin() {
         email: ADMIN_EMAIL,
         password: password.trim(),
       })
-      if (signInErr) {
-        setError('비밀번호가 올바르지 않아요.')
-        return
-      }
+      if (signInErr) { setError('비밀번호가 올바르지 않아요.'); return }
       if (data.user) {
         sessionStorage.setItem('admin_auth', 'true')
         setLocation('/admin')
@@ -38,6 +37,11 @@ export default function AdminLogin() {
 
   return (
     <div className={styles.root}>
+      {/* 테마 버튼 */}
+      <button className={styles.themeBtn} onClick={toggleTheme} aria-label="테마 전환">
+        {theme === 'light' ? '🌙 어둡게' : '☀️ 밝게'}
+      </button>
+
       {/* 배경 장식 */}
       <div className={styles.bgOrb1} />
       <div className={styles.bgOrb2} />
@@ -87,11 +91,7 @@ export default function AdminLogin() {
           )}
 
           <button className={styles.btn} type="submit" disabled={loading || !password}>
-            {loading ? (
-              <span className={styles.btnLoading}>확인 중...</span>
-            ) : (
-              '🔑 로그인'
-            )}
+            {loading ? '확인 중...' : '🔑 로그인'}
           </button>
         </form>
 
