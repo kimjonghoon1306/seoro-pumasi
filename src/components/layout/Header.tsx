@@ -103,7 +103,10 @@ export default function Header({ points = 0, nickname, onLogout }: HeaderProps) 
                   <div className={styles.avatar}>{nickname[0]}</div>
                   <span className={styles.nickname}>{nickname}</span>
                 </div>
-                <button className={styles.logoutBtn} onClick={onLogout} title="로그아웃">🚪</button>
+                <button className={styles.logoutBtn} onClick={onLogout} title="로그아웃">
+                  <span className={styles.logoutText}>로그아웃</span>
+                  <span className={styles.logoutEmoji}>🚪</span>
+                </button>
               </>
             ) : (
               <Link href="/login" className={styles.loginBtn}>시작하기 →</Link>
