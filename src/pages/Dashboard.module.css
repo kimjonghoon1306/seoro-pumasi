@@ -412,3 +412,52 @@
   .slideBtn   { font-size: 14px; padding: 10px 20px; }
   .slideTag   { font-size: 12px; }
 }
+
+/* ════════ 사용방법 버튼 ════════ */
+.howToBtn {
+  width: 100%;
+  display: flex; align-items: center; gap: 16px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r4);
+  padding: var(--s5) var(--s6);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+  margin-bottom: var(--s4);
+  box-shadow: var(--shadow-sm);
+}
+.howToBtn:hover {
+  border-color: var(--g400);
+  background: rgba(34,160,90,0.04);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+.howToBtnIcon {
+  font-size: 32px; flex-shrink: 0;
+  width: 52px; height: 52px;
+  background: rgba(34,160,90,0.1);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.howToBtnText {
+  flex: 1;
+  display: flex; flex-direction: column; gap: 3px;
+}
+.howToBtnTitle {
+  font-size: 17px; font-weight: 700; color: var(--text-main);
+}
+.howToBtnDesc {
+  font-size: 14px; color: var(--text-muted);
+}
+.howToBtnArrow {
+  font-size: 20px; color: var(--g400); flex-shrink: 0;
+  transition: transform 0.15s;
+}
+.howToBtn:hover .howToBtnArrow { transform: translateX(4px); }
+
+@media (max-width: 640px) {
+  .howToBtn { padding: var(--s4) var(--s5); }
+  .howToBtnTitle { font-size: 16px; }
+  .howToBtnDesc  { font-size: 13px; }
+}
