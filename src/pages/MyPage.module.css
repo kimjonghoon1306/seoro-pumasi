@@ -201,3 +201,121 @@ a.infoBadge:hover { background: rgba(255,255,255,0.18); }
   .cardTitle { font-size: 19px; }
   .label { font-size: 17px; }
 }
+
+/* ════════════ 탭 바 ════════════ */
+.tabBar {
+  display: flex;
+  background: var(--bg-subtle);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r4);
+  padding: 6px;
+  gap: 6px;
+}
+.tabBtn {
+  flex: 1;
+  padding: 14px 20px;
+  border-radius: var(--r3);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: all 0.15s;
+  text-align: center;
+  min-height: 52px;
+}
+.tabBtn:hover { color: var(--text-sub); background: var(--border); }
+.tabBtnActive {
+  background: var(--bg-card) !important;
+  color: var(--g600) !important;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ════════════ 포인트 내역 ════════════ */
+.historyCard {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r5);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.historyHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 28px 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.historyHeader .cardTitle { margin-bottom: 0; }
+.historyLegend {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.legendEarn    { color: var(--g500); }
+.legendPending { color: var(--gold-dark); }
+.legendSpend   { color: var(--pink); }
+
+.historyList {
+  border-top: 1px solid var(--border);
+}
+.historyRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 28px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.12s;
+}
+.historyRow:last-child { border-bottom: none; }
+.historyRow:hover { background: var(--bg-subtle); }
+
+.historyIcon {
+  font-size: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.historyInfo  { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.historyLabel { font-size: 16px; font-weight: 600; color: var(--text-main); }
+.historyDetail{ font-size: 13px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.historyDate  { font-size: 13px; color: var(--text-muted); }
+
+.historyAmount {
+  font-size: 18px;
+  font-weight: 700;
+  font-family: var(--font-display);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.historyEarn  { color: var(--g500); }
+.historySpend { color: var(--pink); }
+
+.historyEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 60px 20px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+.historyEmpty span { font-size: 48px; }
+.historyEmpty p    { font-size: 17px; color: var(--text-sub); font-weight: 500; }
+.historyEmpty small{ font-size: 14px; color: var(--text-muted); }
+
+/* 모바일 */
+@media (max-width: 640px) {
+  .tabBtn { font-size: 15px; padding: 14px 10px; }
+  .historyRow { padding: 16px 18px; gap: 12px; }
+  .historyLabel { font-size: 15px; }
+  .historyAmount { font-size: 16px; }
+  .historyDetail { white-space: normal; }
+  .historyHeader { padding: 20px 18px 14px; }
+}
