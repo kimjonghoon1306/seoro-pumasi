@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useLocation } from 'wouter'
+import { useLocation, Link } from 'wouter'
 import { supabase } from '../lib/supabase'
 import styles from './Admin.module.css'
 
@@ -112,6 +112,7 @@ export default function Admin() {
           <h1 className={styles.title}>⚙️ 관리자 페이지</h1>
           <p className={styles.desc}>인증 승인 및 설정 관리</p>
         </div>
+        <Link href="/dashboard" className={styles.dashBtn}>회원 대시보드 →</Link>
         <button className={styles.logoutBtn} onClick={logout}>로그아웃</button>
       </div>
 

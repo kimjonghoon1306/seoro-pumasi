@@ -195,3 +195,20 @@
 .settingsBtn { background: var(--green); color: #fff; font-size: 16px; font-weight: 700; padding: 14px; border-radius: var(--radius-sm); transition: background 0.15s; }
 .settingsBtn:hover:not(:disabled) { background: var(--green-dark); }
 .settingsBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.dashBtn {
+  background: rgba(245,200,66,0.15);
+  color: var(--gold, #f5c842);
+  border: 1px solid rgba(245,200,66,0.3);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 99px;
+  transition: all 0.2s;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.dashBtn:hover {
+  background: rgba(245,200,66,0.25);
+  transform: translateX(2px);
+}
