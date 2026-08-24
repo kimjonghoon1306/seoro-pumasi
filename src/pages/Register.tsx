@@ -66,6 +66,7 @@ export default function Register() {
       <Link href="/dashboard" className="back-btn">← 대시보드로 돌아가기</Link>
 
       <div className={styles.header}>
+        <img className={styles.registerCharacter} src="/characters/bori-cheer.png" alt="미션 등록을 응원하는 캐릭터 보리" />
         <h1 className={styles.title}>✏️ 미션 올리기</h1>
         <p className={styles.desc}>
           포인트를 써서 내 블로그에 이웃을 늘려요!<br />

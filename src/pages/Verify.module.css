@@ -7,6 +7,9 @@
   padding-bottom: var(--s16);
   align-items: start;
 }
+
+.guide{position:relative;overflow:hidden;padding-right:180px}.verifyCharacter{position:absolute;right:10px;bottom:-42px;width:165px;max-height:210px;object-fit:contain;filter:drop-shadow(0 14px 12px rgba(0,0,0,.14))}
+@media(max-width:650px){.guide{padding-right:18px;padding-bottom:150px}.verifyCharacter{width:145px;right:50%;transform:translateX(50%);bottom:-30px}}
 /* 미션 정보박스 — 전체 너비 */
 .missionBox { grid-column: 1 / -1; }
 /* 완료화면 — 전체 너비 */

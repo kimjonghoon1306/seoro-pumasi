@@ -5,11 +5,11 @@ import styles from './Login.module.css'
 
 type Tab = 'login' | 'signup'
 
-function normalizeBlogUrl(raw: string): string {
+function normalizeProfileUrl(raw: string): string {
   const t = raw.trim()
   if (!t) return ''
   if (t.startsWith('http')) return t
-  if (t.includes('blog.naver.com')) return `https://${t}`
+  if (t.includes('.')) return `https://${t}`
   return `https://blog.naver.com/${t}`
 }
 
@@ -49,9 +49,9 @@ export default function Login() {
   async function handleSignup(e: React.FormEvent) {
     e.preventDefault(); setError('')
     if (!nickname.trim()) { setError('닉네임을 입력해 주세요.'); return }
-    if (!blogUrl.trim())  { setError('블로그 주소를 입력해 주세요.'); return }
+    if (!blogUrl.trim())  { setError('대표 활동 링크를 입력해 주세요.'); return }
     setLoading(true)
-    try { await signUp(email, password, nickname.trim(), normalizeBlogUrl(blogUrl)); setLocation('/dashboard') }
+    try { await signUp(email, password, nickname.trim(), normalizeProfileUrl(blogUrl)); setLocation('/dashboard') }
     catch (err: unknown) {
       const msg = (err as Error).message || ''
       setError(msg.includes('already registered') ? '이미 가입된 이메일이에요.' : '가입 중 문제가 생겼어요.')
@@ -73,21 +73,21 @@ export default function Login() {
             <span className={styles.visualLogoName}>서로품앗이</span>
           </div>
           <p className={styles.visualTagline}>
-            내가 이웃 블로그를 방문하면 포인트가 쌓이고<br/>
-            그 포인트로 내 블로그에 진짜 이웃이 생겨요
+            체험하고, 만들고, 돕고, 함께 키우는 사람들.<br/>
+            하나의 프로필로 여러 월드를 자유롭게 오가세요
           </p>
           <div className={styles.visualStats}>
             <div className={styles.visualStat}>
-              <span className={styles.visualStatEmoji}>🤝</span>
-              <span className={styles.visualStatText}>서로이웃 추가 <strong>+10P</strong></span>
+              <span className={styles.visualStatEmoji}>✦</span>
+              <span className={styles.visualStatText}>체험단 <strong>경험하기</strong></span>
             </div>
             <div className={styles.visualStat}>
-              <span className={styles.visualStatEmoji}>💛</span>
-              <span className={styles.visualStatText}>공감 누르기 <strong>+3P</strong></span>
+              <span className={styles.visualStatEmoji}>✎</span>
+              <span className={styles.visualStatText}>퍼블리 <strong>만들기</strong></span>
             </div>
             <div className={styles.visualStat}>
-              <span className={styles.visualStatEmoji}>💬</span>
-              <span className={styles.visualStatText}>댓글 달기 <strong>+5P</strong></span>
+              <span className={styles.visualStatEmoji}>↗</span>
+              <span className={styles.visualStatText}>파트너·팜 <strong>연결하기</strong></span>
             </div>
           </div>
         </div>
@@ -177,20 +177,20 @@ export default function Login() {
               <form onSubmit={handleSignup} className={styles.form}>
                 <div>
                   <h2 className={styles.formTitle}>거의 다 왔어요!</h2>
-                  <p className={styles.formDesc}>닉네임과 블로그 주소를 알려주세요 (2/2)</p>
+                  <p className={styles.formDesc}>이름과 대표 활동 링크를 알려주세요 (2/2)</p>
                 </div>
                 <label className={styles.label}>
                   닉네임
-                  <input className={styles.input} type="text" placeholder="꽃할머니, 블로그왕..."
+                  <input className={styles.input} type="text" placeholder="활동할 때 사용할 이름"
                     value={nickname} onChange={e=>setNickname(e.target.value)} maxLength={12}/>
                   <span className={styles.hint}>12자 이내로 자유롭게</span>
                 </label>
                 <label className={styles.label}>
-                  네이버 블로그 주소
+                  대표 활동 링크
                   <input className={styles.input} type="text"
-                    placeholder="blog.naver.com/아이디  또는  아이디만"
+                    placeholder="블로그 · SNS · 쇼핑몰 · 포트폴리오 주소"
                     value={blogUrl} onChange={e=>setBlogUrl(e.target.value)}/>
-                  <span className={styles.hint}>아이디만 입력해도 괜찮아요</span>
+                  <span className={styles.hint}>지금은 가장 자주 사용하는 링크 하나만 알려주세요</span>
                 </label>
                 {error && <div className={styles.error}>⚠️ {error}</div>}
                 <div className={styles.btnRow}>

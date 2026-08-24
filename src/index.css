@@ -38,10 +38,10 @@
   --n900: #080f0a;
 
   /* ── 라이트 시맨틱 (기본) ── */
-  --bg:         #eef2f0;
-  --bg-card:    #ffffff;
-  --bg-subtle:  #e2ebe6;
-  --border:     #c0d4c9;
+  --bg:         #f4f1e9;
+  --bg-card:    #fbfaf6;
+  --bg-subtle:  #ebe7dc;
+  --border:     #d5d0c5;
   --border-mid: #9ab8ac;
   --text-main:  #0a1a12;   /* 아주 진한 다크그린 */
   --text-sub:   #1e3d2c;   /* 서브도 진하게 */

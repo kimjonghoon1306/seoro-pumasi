@@ -7,6 +7,9 @@
   padding-bottom: var(--s16);
 }
 
+.topBanner{position:relative;overflow:hidden;padding-right:190px}.guideCharacter{position:absolute;right:18px;bottom:-48px;width:170px;filter:drop-shadow(0 15px 12px rgba(0,0,0,.15));animation:mascotBob 4s ease-in-out infinite}@keyframes mascotBob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-7px) rotate(2deg)}}
+@media(max-width:700px){.topBanner{padding-right:20px;padding-bottom:150px}.guideCharacter{width:145px;right:50%;transform:translateX(50%);bottom:-35px}}
+
 /* 상단 배너 */
 .topBanner {
   display: flex;

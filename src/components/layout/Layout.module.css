@@ -4,7 +4,7 @@
   background: var(--n900);
   border-top: 1px solid rgba(255,255,255,0.06);
   padding: var(--s10) var(--s8);
-  margin-top: var(--s20);
+  margin-top: 0;
 }
 .footerInner {
   max-width: var(--max-w);

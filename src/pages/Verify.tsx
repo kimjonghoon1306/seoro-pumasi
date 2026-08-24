@@ -161,6 +161,7 @@ export default function Verify() {
 
       {/* 단계 안내 */}
       <div className={styles.guide}>
+        <img className={styles.verifyCharacter} src="/characters/dodo-checker.png" alt="인증을 안내하는 캐릭터 도도" />
         <h2 className={styles.guideTitle}>📌 이렇게 하면 돼요!</h2>
         <div className={styles.guideSteps}>
           <div className={styles.guideStep}>

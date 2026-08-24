@@ -7,6 +7,9 @@
   padding-bottom: var(--s16);
 }
 
+.header{position:relative;overflow:hidden;padding-right:180px}.registerCharacter{position:absolute;right:15px;bottom:-60px;width:170px;filter:drop-shadow(0 14px 12px rgba(0,0,0,.14));animation:registerBounce 3.6s ease-in-out infinite}@keyframes registerBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@media(max-width:650px){.header{padding-right:18px;padding-bottom:140px}.registerCharacter{width:145px;right:50%;transform:translateX(50%);bottom:-48px}}
+
 /* 헤더 */
 .header {
   background: linear-gradient(135deg, var(--g500) 0%, var(--g700) 100%);

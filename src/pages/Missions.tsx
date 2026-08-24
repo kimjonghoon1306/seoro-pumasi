@@ -62,11 +62,12 @@ export default function Missions() {
 
       {/* 상단 안내 */}
       <div className={styles.topBanner}>
+        <img className={styles.guideCharacter} src="/characters/monggeul-explorer.png" alt="미션을 찾는 캐릭터 몽글" />
         <div className={styles.topLeft}>
           <h1 className={styles.title}>📋 미션 목록</h1>
           <p className={styles.desc}>
             아래 블로그를 방문해서 활동하고 포인트를 받아요!<br />
-            활동 후 화면을 캡처해서 인증하면 포인트가 쌓여요 ⭐
+            활동 후 화면을 캡처해서 인증하면 포인트가 쌓여요. 몽글이가 좋은 미션을 찾아줄게요!
           </p>
         </div>
         <Link href="/register" className={styles.registerBtn}>

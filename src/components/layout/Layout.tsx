@@ -36,9 +36,9 @@ export default function Layout({ children, points, nickname, onLogout }: LayoutP
         <div className={styles.footerInner}>
           <div className={styles.footerLogo}>
             <span className={styles.footerLogoText}>서로품앗이</span>
-            <span className={styles.footerTagline}>함께 키우는 블로그 이웃</span>
+            <span className={styles.footerTagline}>사람과 일이 만나는 참여 네트워크</span>
           </div>
-          <p className={styles.footerCopy}>© 2025 서로품앗이. All rights reserved.</p>
+          <p className={styles.footerCopy}>© {new Date().getFullYear()} 서로품앗이. 함께 발견하고, 만들고, 자랍니다.</p>
         </div>
       </footer>
     </div>
