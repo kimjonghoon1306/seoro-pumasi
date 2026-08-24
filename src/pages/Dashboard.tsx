@@ -19,7 +19,10 @@ export default function Dashboard() {
 
   const approved = completions.filter((item: Completion) => item.status === 'approved').length
   const pending = completions.filter((item: Completion) => item.status === 'pending').length
+  const rejected = completions.filter((item: Completion) => item.status === 'rejected').length
   const active = missions.filter((item: Mission) => item.status === 'active').length
+  const reviewed = approved + rejected
+  const trustRate = reviewed ? Math.round((approved / reviewed) * 100) : 100
 
   return (
     <div className={styles.page}>
@@ -35,7 +38,7 @@ export default function Dashboard() {
       </section>
 
       <section className={styles.metrics}>
-        {[['완료한 참여', approved], ['확인 중', pending], ['진행 중 퀘스트', active], ['발견한 기회', missions.length]].map(([label, value]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}
+        {[['완료한 참여', approved], ['확인 중', pending], ['진행 중 퀘스트', active], ['나의 신뢰도', `${trustRate}%`]].map(([label, value]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}
       </section>
 
       <div className={styles.contentGrid}>

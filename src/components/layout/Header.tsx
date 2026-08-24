@@ -2,17 +2,19 @@ import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'wouter'
 import { useTheme } from '../../lib/theme'
 import styles from './Header.module.css'
+import NotificationBell from '../NotificationBell'
 
-interface HeaderProps { points?: number; nickname?: string; onLogout?: () => void }
+interface HeaderProps { points?: number; nickname?: string; userId?: string; onLogout?: () => void }
 
 const NAV_ITEMS = [
   { href: '/dashboard', label: '대시보드' },
   { href: '/missions', label: '미션 찾기' },
+  { href: '/community', label: '서로 광장' },
   { href: '/register', label: '미션 만들기' },
   { href: '/mypage', label: '내 정보' },
 ]
 
-export default function Header({ points = 0, nickname, onLogout }: HeaderProps) {
+export default function Header({ points = 0, nickname, userId, onLogout }: HeaderProps) {
   const [location] = useLocation()
   const [open, setOpen] = useState(false)
   const { theme, toggleTheme } = useTheme()
@@ -34,6 +36,7 @@ export default function Header({ points = 0, nickname, onLogout }: HeaderProps) 
         <div className={styles.actions}>
           <button className={styles.themeButton} onClick={toggleTheme} aria-label={theme === 'light' ? '다크 모드' : '라이트 모드'}>{theme === 'light' ? '◐' : '○'}</button>
           {nickname ? <>
+            {userId && <NotificationBell userId={userId} />}
             <Link href="/mypage" className={styles.profile}><span>{nickname.slice(0, 1)}</span><b>{nickname}</b></Link>
             <span className={styles.points}>{points.toLocaleString()} P</span>
             <button className={styles.logout} onClick={onLogout}>로그아웃</button>

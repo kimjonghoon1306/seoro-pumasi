@@ -6,10 +6,11 @@ interface LayoutProps {
   children: React.ReactNode
   points?: number
   nickname?: string
+  userId?: string
   onLogout?: () => void
 }
 
-export default function Layout({ children, points, nickname, onLogout }: LayoutProps) {
+export default function Layout({ children, points, nickname, userId, onLogout }: LayoutProps) {
   // 스크롤 트리거 Intersection Observer
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -30,7 +31,7 @@ export default function Layout({ children, points, nickname, onLogout }: LayoutP
 
   return (
     <div className={styles.root}>
-      <Header points={points} nickname={nickname} onLogout={onLogout} />
+      <Header points={points} nickname={nickname} userId={userId} onLogout={onLogout} />
       <main className={styles.main}>{children}</main>
       <footer className={styles.footer}>
         <div className={styles.footerInner}>

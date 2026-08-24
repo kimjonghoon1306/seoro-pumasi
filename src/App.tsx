@@ -10,6 +10,7 @@ import Verify from './pages/Verify'
 import Admin from './pages/Admin'
 import AdminLogin from './pages/AdminLogin'
 import MyPage from './pages/MyPage'
+import Community from './pages/Community'
 import FindPassword from './pages/FindPassword'
 import ResetPassword from './pages/ResetPassword'
 import FindEmail    from './pages/FindEmail'
@@ -74,7 +75,7 @@ function AppWithLayout() {
   )
 
   return (
-    <Layout nickname={user?.nickname} points={user?.points} onLogout={signOut}>
+    <Layout nickname={user?.nickname} points={user?.points} userId={user?.id} onLogout={signOut}>
       <Switch>
         <Route path="/"              component={Landing} />
         <Route path="/login"         component={Login} />
@@ -86,6 +87,7 @@ function AppWithLayout() {
         <Route path="/register">     <PrivateRoute><Register /></PrivateRoute></Route>
         <Route path="/verify/:id">   <PrivateRoute><Verify /></PrivateRoute></Route>
         <Route path="/mypage">       <PrivateRoute><MyPage /></PrivateRoute></Route>
+        <Route path="/community">    <PrivateRoute><Community /></PrivateRoute></Route>
         <Route>
           <div style={{ textAlign: 'center', padding: '80px 20px' }}>
             <div style={{ fontSize: 60, marginBottom: 16 }}>😅</div>

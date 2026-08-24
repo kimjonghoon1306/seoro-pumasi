@@ -5,6 +5,7 @@ import { useAuth } from '../hooks/useAuth'
 import { MISSION_EMOJI, MISSION_LABELS } from '../types'
 import type { Mission, MissionType } from '../types'
 import styles from './Verify.module.css'
+import MissionChat from '../components/MissionChat'
 
 export default function Verify() {
   const { id } = useParams<{ id: string }>()
@@ -55,6 +56,15 @@ export default function Verify() {
 
     setLoading(true)
     try {
+      // 직접 URL 접근이나 여러 탭 제출도 업로드 전에 차단
+      const { data: existing } = await supabase
+        .from('completions')
+        .select('id')
+        .eq('mission_id', mission.id)
+        .eq('user_id', user.id)
+        .maybeSingle()
+      if (existing) { setError('이미 이 미션을 인증했어요. 중복 제출은 할 수 없어요.'); return }
+
       // 1. Supabase Storage에 스크린샷 업로드
       const ext      = file.name.split('.').pop()
       const filePath = `${user.id}/${id}_${Date.now()}.${ext}`
@@ -235,6 +245,8 @@ export default function Verify() {
           {loading ? '제출 중...' : '✅ 인증 제출하기'}
         </button>
       </form>
+
+      {user && <MissionChat missionId={mission.id} userId={user.id} />}
 
     </div>
   )

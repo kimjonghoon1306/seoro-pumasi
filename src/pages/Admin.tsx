@@ -19,7 +19,7 @@ interface Stats {
   pending: number; approved: number; rejected: number
 }
 interface SiteStats {
-  users: number; missions: number; completions: number
+  users: number; missions: number; completions: number; activeMissions: number; approvalRate: number; participationRate: number
 }
 type Tab = 'pending' | 'approved' | 'rejected' | 'settings'
 
@@ -42,7 +42,7 @@ export default function Admin() {
   const [loading, setLoading]   = useState(true)
   const [tab, setTab]           = useState<Tab>('pending')
   const [stats, setStats]       = useState<Stats>({ pending: 0, approved: 0, rejected: 0 })
-  const [siteStats, setSiteStats] = useState<SiteStats>({ users: 0, missions: 0, completions: 0 })
+  const [siteStats, setSiteStats] = useState<SiteStats>({ users: 0, missions: 0, completions: 0, activeMissions: 0, approvalRate: 0, participationRate: 0 })
   const [siteLoading, setSiteLoading] = useState(false)
 
   // 비밀번호 변경
@@ -86,15 +86,22 @@ export default function Admin() {
   const loadSiteStats = useCallback(async () => {
     setSiteLoading(true)
     try {
-      const [u, m, c] = await Promise.all([
+      const [u, m, c, active, approved] = await Promise.all([
         supabase.from('users').select('*', { count: 'exact', head: true }),
         supabase.from('missions').select('*', { count: 'exact', head: true }),
         supabase.from('completions').select('*', { count: 'exact', head: true }),
+        supabase.from('missions').select('*', { count: 'exact', head: true }).eq('status', 'active'),
+        supabase.from('completions').select('*', { count: 'exact', head: true }).eq('status', 'approved'),
       ])
+      const users = u.count ?? 0
+      const completions = c.count ?? 0
       setSiteStats({
-        users:       u.count ?? 0,
+        users,
         missions:    m.count ?? 0,
-        completions: c.count ?? 0,
+        completions,
+        activeMissions: active.count ?? 0,
+        approvalRate: completions ? Math.round(((approved.count ?? 0) / completions) * 100) : 0,
+        participationRate: users ? Math.round((completions / users) * 10) / 10 : 0,
       })
     } finally {
       setSiteLoading(false)
@@ -439,9 +446,9 @@ export default function Admin() {
                       <span className={styles.siteStatLab}>전체 미션</span>
                     </div>
                     <div className={styles.siteStatCard}>
-                      <span className={styles.siteStatEmoji}>✅</span>
-                      <span className={styles.siteStatNum}>{siteStats.completions.toLocaleString()}</span>
-                      <span className={styles.siteStatLab}>전체 인증</span>
+                      <span className={styles.siteStatEmoji}>🚀</span>
+                      <span className={styles.siteStatNum}>{siteStats.activeMissions.toLocaleString()}</span>
+                      <span className={styles.siteStatLab}>활성 미션</span>
                     </div>
                     <div className={styles.siteStatCard} style={{ '--sc': 'var(--gold)' } as React.CSSProperties}>
                       <span className={styles.siteStatEmoji}>⏳</span>
@@ -449,14 +456,14 @@ export default function Admin() {
                       <span className={styles.siteStatLab}>승인 대기</span>
                     </div>
                     <div className={styles.siteStatCard}>
-                      <span className={styles.siteStatEmoji}>✅</span>
-                      <span className={styles.siteStatNum} style={{ color: 'var(--g400)' }}>{stats.approved}</span>
-                      <span className={styles.siteStatLab}>승인 완료</span>
+                      <span className={styles.siteStatEmoji}>📈</span>
+                      <span className={styles.siteStatNum} style={{ color: 'var(--g400)' }}>{siteStats.approvalRate}%</span>
+                      <span className={styles.siteStatLab}>인증 승인율</span>
                     </div>
                     <div className={styles.siteStatCard}>
-                      <span className={styles.siteStatEmoji}>❌</span>
-                      <span className={styles.siteStatNum} style={{ color: 'var(--pink)' }}>{stats.rejected}</span>
-                      <span className={styles.siteStatLab}>반려됨</span>
+                      <span className={styles.siteStatEmoji}>🔁</span>
+                      <span className={styles.siteStatNum} style={{ color: 'var(--pink)' }}>{siteStats.participationRate}</span>
+                      <span className={styles.siteStatLab}>회원당 평균 참여</span>
                     </div>
                   </div>
                 )}
