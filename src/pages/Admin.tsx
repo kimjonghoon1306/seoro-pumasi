@@ -21,7 +21,9 @@ interface Stats {
 interface SiteStats {
   users: number; missions: number; completions: number; activeMissions: number; approvalRate: number; participationRate: number
 }
-type Tab = 'pending' | 'approved' | 'rejected' | 'settings'
+import BizFinder from '../components/BizFinder'
+
+type Tab = 'pending' | 'approved' | 'rejected' | 'settings' | 'biz'
 
 const TYPE_LABEL: Record<string, string> = {
   neighbor: '🤝 서로이웃',
@@ -110,7 +112,7 @@ export default function Admin() {
 
   /* 목록 로드 */
   const loadData = useCallback(async () => {
-    if (tab === 'settings') return
+    if (tab === 'settings' || tab === 'biz') return
     setLoading(true)
     try {
       const { data } = await supabase
@@ -228,6 +230,7 @@ export default function Admin() {
     { key: 'approved' as Tab, label: '승인 완료', emoji: '✅', count: stats.approved },
     { key: 'rejected' as Tab, label: '반려됨',    emoji: '❌', count: stats.rejected },
     { key: 'settings' as Tab, label: '설정',      emoji: '⚙️', count: 0             },
+    { key: 'biz'      as Tab, label: '업체 찾기', emoji: '🔍', count: 0             },
   ]
   const currentTab = TABS.find(t => t.key === tab)!
 
@@ -336,7 +339,7 @@ export default function Admin() {
               <h1 className={styles.contentTitle}>
                 {currentTab.emoji} {currentTab.label}
               </h1>
-              {tab !== 'settings' && (
+              {tab !== 'settings' && tab !== 'biz' && (
                 <p className={styles.contentSub}>
                   {tab === 'pending'  && `${rows.length}건 처리 대기 중`}
                   {tab === 'approved' && `${rows.length}건 승인 완료`}
@@ -344,7 +347,7 @@ export default function Admin() {
                 </p>
               )}
             </div>
-            {tab !== 'settings' && (
+            {tab !== 'settings' && tab !== 'biz' && (
               <button className={styles.refreshBtn} onClick={loadData}>🔄 새로고침</button>
             )}
           </div>
@@ -514,8 +517,11 @@ export default function Admin() {
             </div>
           )}
 
+          {/* ── 업체 찾기 탭 (관리자 전용) ── */}
+          {tab === 'biz' && <BizFinder />}
+
           {/* ── 목록 탭 ── */}
-          {tab !== 'settings' && (
+          {tab !== 'settings' && tab !== 'biz' && (
             loading ? (
               <div className={styles.emptyState}>
                 <div className={styles.emptyIllustration}>
