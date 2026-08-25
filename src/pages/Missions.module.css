@@ -18,7 +18,8 @@
   gap: 16px;
   background: linear-gradient(135deg, var(--g600) 0%, var(--g900) 100%);
   border-radius: var(--r5);
-  padding: 28px 32px;
+  /* 오른쪽에 캐릭터(absolute, 약 170px) 공간 확보 → '내 미션 올리기' 버튼이 캐릭터 뒤에 안 가림 */
+  padding: 28px 200px 28px 32px;
   color: #fff;
 }
 .topLeft { flex: 1; }
